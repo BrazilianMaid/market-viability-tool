@@ -24,15 +24,12 @@
     --amber-pale: #fef3c7;
     --green:     #059669;
     --green-pale: #d1fae5;
-    --yellow:    #d97706;
     --yellow-pale: #fef9c3;
     --red:       #dc2626;
     --red-pale:  #fee2e2;
     --white:     #ffffff;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--slate-50);
@@ -41,8 +38,6 @@
     font-size: 15px;
     line-height: 1.6;
   }
-
-  /* ── HEADER ── */
   header {
     background: var(--slate-900);
     border-bottom: 1px solid var(--slate-800);
@@ -55,480 +50,134 @@
     top: 0;
     z-index: 100;
   }
-  .header-brand {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .header-brand h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    color: var(--white);
-    letter-spacing: -0.3px;
-  }
+  .header-brand { display: flex; align-items: baseline; gap: 10px; }
+  .header-brand h1 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--white); }
   .header-brand span {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--amber-light);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: rgba(217,119,6,0.15);
-    padding: 2px 7px;
-    border-radius: 3px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--amber-light);
+    text-transform: uppercase; letter-spacing: 2px;
+    background: rgba(217,119,6,0.15); padding: 2px 7px; border-radius: 3px;
     border: 1px solid rgba(217,119,6,0.3);
   }
-  .header-note {
-    font-size: 12px;
-    color: var(--slate-500);
-    font-style: italic;
-  }
-
-  /* ── LAYOUT ── */
-  .app-layout {
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    min-height: calc(100vh - 60px);
-  }
-
-  /* ── LEFT PANEL ── */
+  .header-note { font-size: 12px; color: var(--slate-500); font-style: italic; }
+  .app-layout { display: grid; grid-template-columns: 380px 1fr; min-height: calc(100vh - 60px); }
   .left-panel {
-    background: var(--white);
-    border-right: 1px solid var(--slate-200);
-    padding: 32px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    position: sticky;
-    top: 60px;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
+    background: var(--white); border-right: 1px solid var(--slate-200);
+    padding: 32px 28px; display: flex; flex-direction: column; gap: 28px;
+    position: sticky; top: 60px; height: calc(100vh - 60px); overflow-y: auto;
   }
-
-  .panel-intro h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--slate-900);
-    line-height: 1.3;
-    margin-bottom: 8px;
+  .panel-intro h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--slate-900); line-height: 1.3; margin-bottom: 8px; }
+  .panel-intro p { font-size: 13.5px; color: var(--slate-500); line-height: 1.6; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-600); }
+  .form-group input {
+    width: 100%; padding: 10px 13px; border: 1.5px solid var(--slate-200); border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 14.5px; color: var(--slate-900);
+    background: var(--slate-50); transition: border-color 0.15s, box-shadow 0.15s; outline: none;
   }
-  .panel-intro p {
-    font-size: 13.5px;
-    color: var(--slate-500);
-    line-height: 1.6;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .form-group label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--slate-600);
-  }
-  .form-group input, .form-group select {
-    width: 100%;
-    padding: 10px 13px;
-    border: 1.5px solid var(--slate-200);
-    border-radius: 6px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14.5px;
-    color: var(--slate-900);
-    background: var(--slate-50);
-    transition: border-color 0.15s, box-shadow 0.15s;
-    outline: none;
-  }
-  .form-group input:focus, .form-group select:focus {
-    border-color: var(--amber);
-    box-shadow: 0 0 0 3px rgba(217,119,6,0.1);
-    background: var(--white);
-  }
+  .form-group input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(217,119,6,0.1); background: var(--white); }
   .form-group input::placeholder { color: var(--slate-400); }
-
-  .optional-label {
-    font-size: 10px;
-    color: var(--slate-400);
-    font-style: italic;
-    margin-left: 4px;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-
+  .optional-label { font-size: 10px; color: var(--slate-400); font-style: italic; margin-left: 4px; font-weight: 400; text-transform: none; letter-spacing: 0; }
   .run-btn {
-    width: 100%;
-    padding: 13px;
-    background: var(--slate-900);
-    color: var(--white);
-    border: none;
-    border-radius: 7px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.3px;
-    transition: background 0.15s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    width: 100%; padding: 13px; background: var(--slate-900); color: var(--white);
+    border: none; border-radius: 7px; font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px;
+    transition: background 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px;
   }
   .run-btn:hover:not(:disabled) { background: var(--slate-700); }
   .run-btn:active:not(:disabled) { transform: scale(0.99); }
   .run-btn:disabled { background: var(--slate-300); cursor: not-allowed; }
-
-  /* ── FRAMEWORK CARD ── */
-  .framework-card {
-    background: var(--slate-50);
-    border: 1px solid var(--slate-200);
-    border-radius: 8px;
-    padding: 16px;
-  }
-  .framework-card h3 {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--slate-500);
-    margin-bottom: 12px;
-  }
-  .framework-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--slate-200);
-    font-size: 13px;
-  }
+  .framework-card { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px; padding: 16px; }
+  .framework-card h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-500); margin-bottom: 12px; }
+  .framework-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--slate-200); font-size: 13px; }
   .framework-row:last-child { border-bottom: none; }
   .framework-row .label { color: var(--slate-600); }
-  .framework-row .pts {
-    font-family: 'DM Mono', monospace;
-    font-size: 11.5px;
-    color: var(--amber);
-    font-weight: 500;
-  }
-  .framework-unscored {
-    margin-top: 10px;
-    font-size: 12px;
-    color: var(--slate-500);
-    font-style: italic;
-    line-height: 1.5;
-  }
+  .framework-row .pts { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--amber); font-weight: 500; }
+  .framework-unscored { margin-top: 10px; font-size: 12px; color: var(--slate-500); font-style: italic; line-height: 1.5; }
+  .right-panel { padding: 40px 48px; max-width: 860px; }
 
-  /* ── RIGHT PANEL ── */
-  .right-panel {
-    padding: 40px 48px;
-    max-width: 860px;
-  }
+  /* Empty state */
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; text-align: center; gap: 16px; }
+  .empty-icon { width: 56px; height: 56px; background: var(--slate-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .empty-state h3 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--slate-700); }
+  .empty-state p { font-size: 14px; color: var(--slate-400); max-width: 340px; line-height: 1.6; }
 
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 400px;
-    text-align: center;
-    gap: 16px;
-  }
-  .empty-icon {
-    width: 56px;
-    height: 56px;
-    background: var(--slate-100);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-  }
-  .empty-state h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: var(--slate-700);
-  }
-  .empty-state p {
-    font-size: 14px;
-    color: var(--slate-400);
-    max-width: 340px;
-    line-height: 1.6;
-  }
+  /* Progress bar */
+  .progress-bar-wrap { display: none; margin-bottom: 28px; }
+  .progress-bar-wrap.active { display: block; }
+  .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: var(--slate-500); }
+  .progress-label .current-step { color: var(--amber); font-weight: 600; }
+  .progress-track { height: 4px; background: var(--slate-200); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--amber); border-radius: 99px; transition: width 0.5s ease; width: 0%; }
 
-  /* ── LOADING STATE ── */
-  .loading-state {
-    display: none;
-    flex-direction: column;
-    gap: 20px;
-    padding: 40px 0;
-  }
-  .loading-state.active { display: flex; }
-  .loading-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .loading-spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--slate-200);
-    border-top-color: var(--amber);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-header h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    color: var(--slate-800);
-  }
-  .loading-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-left: 34px;
-  }
-  .loading-step {
-    font-size: 13.5px;
-    color: var(--slate-400);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.3s;
-  }
-  .loading-step.active { color: var(--slate-700); }
-  .loading-step.done { color: var(--green); }
-  .step-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    flex-shrink: 0;
-  }
-
-  /* ── REPORT ── */
-  .report { display: none; }
-  .report.active { display: block; }
-
-  .report-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--slate-200);
-  }
-  .report-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .report-company {
-    font-family: 'DM Serif Display', serif;
-    font-size: 26px;
-    color: var(--slate-900);
-    line-height: 1.2;
-  }
-  .report-role {
-    font-size: 13px;
-    color: var(--slate-500);
-  }
-  .report-actions {
-    display: flex;
-    gap: 8px;
-  }
+  /* Report header */
+  .report-header { display: none; margin-bottom: 24px; }
+  .report-header.active { display: block; }
+  .report-toolbar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--slate-200); }
+  .report-company { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--slate-900); line-height: 1.2; }
+  .report-role { font-size: 13px; color: var(--slate-500); margin-top: 3px; }
+  .report-actions { display: flex; gap: 8px; flex-shrink: 0; }
   .action-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1.5px solid var(--slate-200);
-    background: var(--white);
-    color: var(--slate-700);
+    display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 6px;
+    font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer;
+    transition: all 0.15s; border: 1.5px solid var(--slate-200); background: var(--white); color: var(--slate-700);
   }
   .action-btn:hover { border-color: var(--slate-400); color: var(--slate-900); }
   .action-btn.copied { border-color: var(--green); color: var(--green); background: var(--green-pale); }
 
-  /* ── SCORE BANNER ── */
-  .score-banner {
-    background: var(--slate-900);
-    border-radius: 10px;
-    padding: 24px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-  }
-  .score-left { display: flex; flex-direction: column; gap: 4px; }
-  .score-label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--slate-400);
-  }
-  .score-number {
-    font-family: 'DM Mono', monospace;
-    font-size: 48px;
-    font-weight: 500;
-    line-height: 1;
-  }
-  .score-number .denom {
-    font-size: 22px;
-    color: var(--slate-500);
-  }
-  .score-verdict {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.2px;
-  }
+  /* Score banner */
+  .score-banner { background: var(--slate-900); border-radius: 10px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; opacity: 0; transition: opacity 0.4s ease; }
+  .score-banner.visible { opacity: 1; }
+  .score-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-400); margin-bottom: 4px; }
+  .score-number { font-family: 'DM Mono', monospace; font-size: 48px; font-weight: 500; line-height: 1; }
+  .score-number .denom { font-size: 22px; color: var(--slate-500); }
+  .score-verdict { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 100px; font-weight: 600; font-size: 14px; }
   .verdict-strong { background: var(--green-pale); color: var(--green); }
   .verdict-promising { background: var(--yellow-pale); color: #92400e; }
   .verdict-caution { background: #fff7ed; color: #c2410c; }
   .verdict-risk { background: var(--red-pale); color: var(--red); }
 
-  /* ── REPORT SECTIONS ── */
-  .report-section {
-    margin-bottom: 28px;
-    background: var(--white);
-    border: 1px solid var(--slate-200);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 20px;
-    background: var(--slate-50);
-    border-bottom: 1px solid var(--slate-200);
-  }
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--slate-600);
-  }
-  .section-score {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--amber);
-    font-weight: 500;
-  }
-  .section-body {
-    padding: 18px 20px;
-    font-size: 14.5px;
-    color: var(--slate-700);
-    line-height: 1.7;
-    white-space: pre-wrap;
-  }
+  /* Sections */
+  .sections-container { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+  .report-section { background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .report-section.visible { opacity: 1; transform: translateY(0); }
+  .report-section.loading-section { opacity: 1; transform: translateY(0); }
+  .section-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: var(--slate-50); border-bottom: 1px solid var(--slate-200); }
+  .section-title { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-600); }
+  .section-score { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--amber); font-weight: 500; }
+  .section-body { padding: 18px 20px; font-size: 14.5px; color: var(--slate-700); line-height: 1.7; }
 
-  /* ── TENOR BADGE ── */
-  .tenor-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
+  /* Skeleton loader */
+  .skeleton-lines { display: flex; flex-direction: column; gap: 8px; }
+  .skeleton-line { height: 14px; background: linear-gradient(90deg, var(--slate-100) 25%, var(--slate-200) 50%, var(--slate-100) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
+  .skeleton-line.short { width: 60%; }
+  .skeleton-line.medium { width: 80%; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  /* Tenor badge */
+  .tenor-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 4px; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
   .tenor-green { background: var(--green-pale); color: var(--green); }
   .tenor-yellow { background: var(--yellow-pale); color: #92400e; }
   .tenor-red { background: var(--red-pale); color: var(--red); }
 
-  /* ── TABLE STYLES ── */
-  .report-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-    margin-top: 4px;
-  }
-  .report-table th {
-    text-align: left;
-    padding: 8px 12px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--slate-500);
-    background: var(--slate-50);
-    border-bottom: 1px solid var(--slate-200);
-  }
-  .report-table td {
-    padding: 9px 12px;
-    border-bottom: 1px solid var(--slate-100);
-    color: var(--slate-700);
-    vertical-align: top;
-  }
+  /* Tables */
+  .report-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 4px; }
+  .report-table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-500); background: var(--slate-50); border-bottom: 1px solid var(--slate-200); }
+  .report-table td { padding: 9px 12px; border-bottom: 1px solid var(--slate-100); color: var(--slate-700); vertical-align: top; }
   .report-table tr:last-child td { border-bottom: none; }
   .report-table tr:hover td { background: var(--slate-50); }
 
-  /* ── INTERVIEW Q's ── */
-  .question-block {
-    margin-bottom: 14px;
-    padding: 14px 16px;
-    background: var(--slate-50);
-    border-left: 3px solid var(--amber);
-    border-radius: 0 6px 6px 0;
-  }
-  .question-text {
-    font-size: 14px;
-    color: var(--slate-800);
-    font-weight: 500;
-    margin-bottom: 5px;
-    line-height: 1.5;
-  }
-  .question-note {
-    font-size: 12.5px;
-    color: var(--slate-500);
-    font-style: italic;
-    line-height: 1.5;
-  }
+  /* Interview questions */
+  .question-block { margin-bottom: 12px; padding: 14px 16px; background: var(--slate-50); border-left: 3px solid var(--amber); border-radius: 0 6px 6px 0; }
+  .question-text { font-size: 14px; color: var(--slate-800); font-weight: 500; margin-bottom: 5px; line-height: 1.5; }
+  .question-note { font-size: 12.5px; color: var(--slate-500); font-style: italic; line-height: 1.5; }
+  .question-set-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; margin-top: 4px; }
 
-  /* ── ERROR STATE ── */
-  .error-banner {
-    display: none;
-    background: var(--red-pale);
-    border: 1px solid #fca5a5;
-    border-radius: 7px;
-    padding: 14px 18px;
-    font-size: 14px;
-    color: var(--red);
-    margin-bottom: 20px;
-  }
+  /* Error */
+  .error-banner { display: none; background: var(--red-pale); border: 1px solid #fca5a5; border-radius: 7px; padding: 14px 18px; font-size: 14px; color: var(--red); margin-bottom: 20px; }
   .error-banner.active { display: block; }
 
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 32px;
-    font-size: 12px;
-    color: var(--slate-400);
-    border-top: 1px solid var(--slate-200);
-    margin-top: 40px;
-  }
-  footer em { color: var(--slate-500); font-style: normal; }
-
-  /* ── SCROLLBAR ── */
+  footer { text-align: center; padding: 32px; font-size: 12px; color: var(--slate-400); border-top: 1px solid var(--slate-200); margin-top: 40px; display: none; }
+  footer.active { display: block; }
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 10px; }
@@ -545,91 +194,59 @@
 </header>
 
 <div class="app-layout">
-
-  <!-- LEFT PANEL -->
   <aside class="left-panel">
     <div class="panel-intro">
       <h2>Evaluate before you apply.</h2>
       <p>Get a structured intelligence report on any company — analyst recognition, financial health, customer sentiment, employee culture, channel presence, and interview prep. Built for tech sales professionals.</p>
     </div>
-
     <div class="form-group">
       <label>Company Name</label>
       <input type="text" id="company-input" placeholder="e.g. Cyera, Glean, CrowdStrike" />
     </div>
-
     <div class="form-group">
       <label>Role Title <span class="optional-label">optional but recommended</span></label>
       <input type="text" id="role-input" placeholder="e.g. Channel Account Manager" />
     </div>
-
     <div class="form-group">
       <label>Industry <span class="optional-label">optional</span></label>
       <input type="text" id="industry-input" placeholder="e.g. Data Security, Enterprise SaaS" />
     </div>
-
     <button class="run-btn" id="run-btn" onclick="runAnalysis()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Run Analysis
     </button>
-
     <div class="framework-card">
       <h3>Scoring Framework</h3>
-      <div class="framework-row">
-        <span class="label">Gartner / Analyst Recognition</span>
-        <span class="pts">25 pts</span>
-      </div>
-      <div class="framework-row">
-        <span class="label">Financial Health & Growth</span>
-        <span class="pts">30 pts</span>
-      </div>
-      <div class="framework-row">
-        <span class="label">Customer & Product Sentiment</span>
-        <span class="pts">25 pts</span>
-      </div>
-      <div class="framework-row">
-        <span class="label">Community & Employee Sentiment</span>
-        <span class="pts">20 pts</span>
-      </div>
-      <div class="framework-unscored">
-        + Press tenor, competitive position, channel presence snapshot, and interview question generator — unscored context for interview prep.
-      </div>
+      <div class="framework-row"><span class="label">Gartner / Analyst Recognition</span><span class="pts">25 pts</span></div>
+      <div class="framework-row"><span class="label">Financial Health & Growth</span><span class="pts">30 pts</span></div>
+      <div class="framework-row"><span class="label">Customer & Product Sentiment</span><span class="pts">25 pts</span></div>
+      <div class="framework-row"><span class="label">Community & Employee Sentiment</span><span class="pts">20 pts</span></div>
+      <div class="framework-unscored">+ Press tenor, competitive position, channel presence, and interview questions — unscored context for interview prep.</div>
     </div>
   </aside>
 
-  <!-- RIGHT PANEL -->
   <main class="right-panel">
-
-    <!-- Empty State -->
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">📊</div>
       <h3>No report yet</h3>
-      <p>Enter a company name on the left and run an analysis. Reports take 20–40 seconds as Claude searches across multiple sources.</p>
+      <p>Enter a company name and run an analysis. Results appear progressively as each section completes.</p>
     </div>
 
-    <!-- Error Banner -->
     <div class="error-banner" id="error-banner"></div>
 
-    <!-- Loading State -->
-    <div class="loading-state" id="loading-state">
-      <div class="loading-header">
-        <div class="loading-spinner"></div>
-        <h3 id="loading-company-name">Researching company...</h3>
+    <!-- Progress bar -->
+    <div class="progress-bar-wrap" id="progress-wrap">
+      <div class="progress-label">
+        <span class="current-step" id="progress-label">Starting analysis...</span>
+        <span id="progress-pct">0%</span>
       </div>
-      <div class="loading-steps">
-        <div class="loading-step active" id="step-1"><div class="step-dot"></div> Searching Gartner, Forrester, and analyst sources</div>
-        <div class="loading-step" id="step-2"><div class="step-dot"></div> Pulling funding, valuation, and headcount data</div>
-        <div class="loading-step" id="step-3"><div class="step-dot"></div> Reading G2 and Gartner Peer Insights reviews</div>
-        <div class="loading-step" id="step-4"><div class="step-dot"></div> Scanning Glassdoor, Blind, and RepVue</div>
-        <div class="loading-step" id="step-5"><div class="step-dot"></div> Fetching vendor partner page and reseller sites</div>
-        <div class="loading-step" id="step-6"><div class="step-dot"></div> Compiling report and generating interview questions</div>
-      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
     </div>
 
-    <!-- Report Output -->
-    <div class="report" id="report-output">
+    <!-- Report header (company name + actions) -->
+    <div class="report-header" id="report-header">
       <div class="report-toolbar">
-        <div class="report-meta">
+        <div>
           <div class="report-company" id="report-company-title"></div>
           <div class="report-role" id="report-role-title"></div>
         </div>
@@ -644,91 +261,193 @@
           </button>
         </div>
       </div>
-
-      <div id="report-body"></div>
+      <!-- Score banner renders here -->
+      <div id="score-banner-slot"></div>
     </div>
 
-    <footer id="page-footer" style="display:none">
+    <!-- Sections render here progressively -->
+    <div class="sections-container" id="sections-container"></div>
+
+    <footer id="page-footer">
       <em>Market Viability Score</em> — Research sourced live via web search. Always verify key findings independently before making career decisions.
     </footer>
-
   </main>
 </div>
 
 <script>
-let currentReport = { company: '', role: '', markdown: '', generatedAt: '' };
-let stepInterval = null;
+let reportData = { company: '', role: '', sections: [], generatedAt: '' };
+
+const STEPS = [
+  { label: 'Scoring analyst recognition, financial health & sentiment...', pct: 10 },
+  { label: 'Analyzing press, competitive position & key signals...', pct: 40 },
+  { label: 'Scanning vendor partner page and reseller sites...', pct: 65 },
+  { label: 'Generating interview questions...', pct: 88 },
+];
+
+function setProgress(stepIndex, pct) {
+  document.getElementById('progress-label').textContent = STEPS[stepIndex].label;
+  document.getElementById('progress-pct').textContent = `${pct}%`;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+}
+
+function showSkeletonSection(icon, title) {
+  const id = `section-${title.replace(/\s+/g, '-').toLowerCase()}`;
+  const el = document.createElement('div');
+  el.className = 'report-section loading-section';
+  el.id = id;
+  el.innerHTML = `
+    <div class="section-header">
+      <div class="section-title">${icon} ${title}</div>
+    </div>
+    <div class="section-body">
+      <div class="skeleton-lines">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line medium"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+    </div>`;
+  document.getElementById('sections-container').appendChild(el);
+  return id;
+}
+
+function replaceSection(id, html) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = html;
+  el.classList.remove('loading-section');
+  requestAnimationFrame(() => el.classList.add('visible'));
+}
+
+async function callStep(step, company, role, industry, context = '') {
+  const res = await fetch('/api/analyze', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ company, role, industry, step, context })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data.result;
+}
 
 async function runAnalysis() {
   const company = document.getElementById('company-input').value.trim();
   const role = document.getElementById('role-input').value.trim();
   const industry = document.getElementById('industry-input').value.trim();
+  if (!company) { document.getElementById('company-input').focus(); return; }
 
-  if (!company) {
-    document.getElementById('company-input').focus();
-    return;
-  }
-
-  // Reset UI
+  // Reset
   document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('report-output').classList.remove('active');
   document.getElementById('error-banner').classList.remove('active');
-  document.getElementById('page-footer').style.display = 'none';
-  document.getElementById('loading-state').classList.add('active');
-  document.getElementById('loading-company-name').textContent = `Researching ${company}...`;
+  document.getElementById('report-header').classList.remove('active');
+  document.getElementById('sections-container').innerHTML = '';
+  document.getElementById('score-banner-slot').innerHTML = '';
+  document.getElementById('page-footer').classList.remove('active');
+  document.getElementById('progress-wrap').classList.add('active');
   document.getElementById('run-btn').disabled = true;
 
-  // Reset steps
-  for (let i = 1; i <= 6; i++) {
-    const el = document.getElementById(`step-${i}`);
-    el.classList.remove('active', 'done');
-  }
-  document.getElementById('step-1').classList.add('active');
+  reportData = { company, role: role || 'General Evaluation', sections: [], generatedAt: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) };
 
-  // Animate loading steps
-  let currentStep = 1;
-  stepInterval = setInterval(() => {
-    if (currentStep <= 6) {
-      document.getElementById(`step-${currentStep}`).classList.remove('active');
-      document.getElementById(`step-${currentStep}`).classList.add('done');
-      currentStep++;
-      if (currentStep <= 6) document.getElementById(`step-${currentStep}`).classList.add('active');
-    }
-  }, 5000);
+  // Show report header immediately
+  document.getElementById('report-company-title').textContent = company;
+  document.getElementById('report-role-title').textContent = `${reportData.role} · Generated ${reportData.generatedAt}`;
+  document.getElementById('report-header').classList.add('active');
 
   try {
-    const prompt = buildPrompt(company, role, industry);
-    const response = await fetch('/api/analyze', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ company, role, industry })
-    });
+    // ── STEP 1: Scored categories ──
+    setProgress(0, 10);
+    const s1ids = [
+      showSkeletonSection('📊', 'Gartner / Analyst Recognition'),
+      showSkeletonSection('💰', 'Financial Health & Growth'),
+      showSkeletonSection('⭐', 'Customer & Product Sentiment'),
+      showSkeletonSection('👥', 'Community & Employee Sentiment'),
+    ];
 
-    clearInterval(stepInterval);
-    for (let i = 1; i <= 6; i++) {
-      document.getElementById(`step-${i}`).classList.remove('active');
-      document.getElementById(`step-${i}`).classList.add('done');
+    const step1 = await callStep(1, company, role, industry);
+    reportData.sections.push({ step: 1, text: step1 });
+    setProgress(0, 38);
+
+    // Render score banner
+    const scoreMatch = step1.match(/Overall Score:\s*(\d+)\s*\/\s*100\s*[—-]\s*(.+)/i);
+    if (scoreMatch) {
+      const score = parseInt(scoreMatch[1]);
+      const verdict = scoreMatch[2].trim().replace(/\*+/g, '');
+      let vClass = 'verdict-strong', color = '#10b981';
+      if (score < 85 && score >= 70) { vClass = 'verdict-promising'; color = '#d97706'; }
+      else if (score < 70 && score >= 50) { vClass = 'verdict-caution'; color = '#ea580c'; }
+      else if (score < 50) { vClass = 'verdict-risk'; color = '#dc2626'; }
+      document.getElementById('score-banner-slot').innerHTML = `
+        <div class="score-banner visible" style="margin-top:0">
+          <div><div class="score-label">Overall Score</div>
+          <div class="score-number" style="color:${color}">${score}<span class="denom"> / 100</span></div></div>
+          <div class="score-verdict ${vClass}">${getVerdictEmoji(verdict)} ${verdict}</div>
+        </div>`;
     }
 
-    if (!response.ok) throw new Error(`API error ${response.status}`);
-    const data = await response.json();
-    if (data.error) throw new Error(data.error);
+    // Render category sections from step 1
+    const catSections = parseStep1Sections(step1);
+    const catDefs = [
+      { key: 'gartner', icon: '📊', title: 'Gartner / Analyst Recognition' },
+      { key: 'financial', icon: '💰', title: 'Financial Health & Growth' },
+      { key: 'customer', icon: '⭐', title: 'Customer & Product Sentiment' },
+      { key: 'community', icon: '👥', title: 'Community & Employee Sentiment' },
+    ];
+    catDefs.forEach((def, i) => {
+      const content = catSections[def.key] || '';
+      const scoreMatch = content.match(/—\s*(\d+)\/(\d+)/);
+      const title = def.title;
+      const scoreHTML = scoreMatch ? `<div class="section-score">${scoreMatch[1]} / ${scoreMatch[2]}</div>` : '';
+      const bodyText = content.replace(/###.*\n/, '').replace(/—\s*\d+\/\d+/, '').trim();
+      replaceSection(s1ids[i], `
+        <div class="section-header">
+          <div class="section-title">${def.icon} ${title}</div>
+          ${scoreHTML}
+        </div>
+        <div class="section-body">${formatText(bodyText)}</div>`);
+    });
 
-    const textContent = data.result;
+    // ── STEP 2: Context layers ──
+    setProgress(1, 40);
+    const s2ids = [
+      showSkeletonSection('🗞️', 'Recent Press Tenor'),
+      showSkeletonSection('🚦', `Key Signals for a ${role || 'Tech Sales Role'}`),
+      showSkeletonSection('⚔️', 'Competitive Position'),
+    ];
 
-    currentReport = {
-      company,
-      role: role || 'General Evaluation',
-      markdown: textContent,
-      generatedAt: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-    };
+    const step2 = await callStep(2, company, role, industry, step1);
+    reportData.sections.push({ step: 2, text: step2 });
+    setProgress(1, 63);
 
-    renderReport(currentReport);
+    // Render step 2 sections
+    renderPressTenor(s2ids[0], step2);
+    renderKeySignals(s2ids[1], step2, role);
+    renderCompetitive(s2ids[2], step2);
+
+    // ── STEP 3: Channel presence ──
+    setProgress(2, 65);
+    const s3id = showSkeletonSection('🤝', 'Channel Presence Snapshot');
+
+    const step3 = await callStep(3, company, role, industry);
+    reportData.sections.push({ step: 3, text: step3 });
+    setProgress(2, 86);
+    renderChannelPresence(s3id, step3);
+
+    // ── STEP 4: Interview questions ──
+    setProgress(3, 88);
+    const s4id = showSkeletonSection('🎯', 'Interview Questions');
+    const contextSummary = `${step1}\n\n${step2}\n\n${step3}`;
+    const step4 = await callStep(4, company, role, industry, contextSummary);
+    reportData.sections.push({ step: 4, text: step4 });
+    renderInterviewQuestions(s4id, step4);
+
+    // Done
+    setProgress(3, 100);
+    setTimeout(() => {
+      document.getElementById('progress-wrap').classList.remove('active');
+      document.getElementById('page-footer').classList.add('active');
+    }, 800);
 
   } catch (err) {
-    clearInterval(stepInterval);
-    document.getElementById('loading-state').classList.remove('active');
-    document.getElementById('empty-state').style.display = 'flex';
+    document.getElementById('progress-wrap').classList.remove('active');
     const errEl = document.getElementById('error-banner');
     errEl.textContent = `Something went wrong: ${err.message}. Please try again.`;
     errEl.classList.add('active');
@@ -737,291 +456,151 @@ async function runAnalysis() {
   }
 }
 
-function buildPrompt(company, role, industry) {
-  const roleStr = role || 'tech sales role';
-  const industryStr = industry ? ` in the ${industry} industry` : '';
-  return `Run a full Market Viability Report for ${company}${industryStr}. The candidate is evaluating this company for a ${roleStr} position.
+// ── PARSERS ──
 
-Search the web thoroughly and return the report in this exact structure:
-
-## ${company} — Market Viability Score
-
-### Overall Score: [XX] / 100 — [Strong Buy / Promising / Proceed with Caution / High Risk]
-
----
-
-### Gartner / Analyst Recognition — [XX]/25
-[Summary of Gartner MQ, EMQ, Cool Vendor, Forrester Wave, or IDC mentions. Include recency. Score conservatively if data is sparse.]
-
-### Financial Health & Growth — [XX]/30
-[Funding rounds, valuation, ARR/revenue, layoff history, investor quality, headcount trajectory. Flag any distress signals.]
-
-### Customer & Product Sentiment — [XX]/25
-[G2 rating and review themes, Gartner Peer Insights rating and review count. Common praise and criticism.]
-
-### Community & Employee Sentiment — [XX]/20
-[Glassdoor overall rating and % recommend, Blind discussions, RepVue score. Note sales org specific signals if available. Flag recurring concerns.]
-
----
-
-### Recent Press Tenor
-[🟢 Positive / 🟡 Mixed / 🔴 Negative] — [One sentence summary of last 90 days coverage]
-
----
-
-### Key Signals for a ${roleStr}
-[Table with Signal | Reading columns. Use ✅ ⚠️ 🔴. Include 5-6 rows most relevant to this specific role.]
-
----
-
-### Competitive Position
-[2-3 paragraph narrative on closest competitors and encroachment risk.]
-
----
-
-### Channel Presence Snapshot
-First, fetch ${company}'s partner or resellers page to extract any named VARs or resellers they list. Then validate each named partner via site: searches. Also check against this fallback list: CDW (cdw.com), SHI (shi.com), Insight (insight.com), Connection (connection.com), Softchoice (softchoice.com), WWT (wwt.com), Optiv (optiv.com), GuidePoint (guidepointsecurity.com), Presidio (presidio.com), Trace3 (trace3.com).
-
-Present as a table: Reseller | Type | On Vendor Site | On Reseller Site
-Follow with one sentence on what the channel footprint signals.
-
----
-
-### Interview Questions
-
-**Questions to Ask Them:**
-[5-6 specific questions grounded in findings from THIS report — channel gaps, culture flags, competitive risks, financial signals. Each with a one-line note on what intel it's designed to surface. Format: Question text on one line, then (Note: ...) on the next.]
-
-**Questions to Prepare For:**
-[5-6 likely interview questions based on the JD responsibilities and company stage. Each with a one-line coaching note on what the interviewer is really assessing. Format: Question text on one line, then (Note: ...) on the next.]
-
-Keep responses grounded in what you actually found. If data was unavailable for a category, note it and score conservatively. Do not fabricate.`;
+function parseStep1Sections(text) {
+  const result = {};
+  const patterns = [
+    { key: 'gartner', regex: /### Gartner[^\n]*([\s\S]*?)(?=### Financial|### Customer|### Community|### Overall|$)/i },
+    { key: 'financial', regex: /### Financial[^\n]*([\s\S]*?)(?=### Customer|### Community|### Overall|$)/i },
+    { key: 'customer', regex: /### Customer[^\n]*([\s\S]*?)(?=### Community|### Overall|$)/i },
+    { key: 'community', regex: /### Community[^\n]*([\s\S]*?)(?=### Overall|$)/i },
+  ];
+  patterns.forEach(p => {
+    const m = text.match(p.regex);
+    if (m) result[p.key] = (m[0] || '').trim();
+  });
+  return result;
 }
 
-function renderReport(r) {
-  document.getElementById('loading-state').classList.remove('active');
-  document.getElementById('report-company-title').textContent = r.company;
-  document.getElementById('report-role-title').textContent = `${r.role} · Generated ${r.generatedAt}`;
-
-  const body = document.getElementById('report-body');
-  body.innerHTML = renderMarkdownToHTML(r.markdown);
-
-  document.getElementById('report-output').classList.add('active');
-  document.getElementById('page-footer').style.display = 'block';
+function renderPressTenor(id, text) {
+  const match = text.match(/### Recent Press Tenor\n([^\n]+)/i);
+  const line = match ? match[1].trim() : '';
+  const isGreen = line.includes('🟢');
+  const isRed = line.includes('🔴');
+  const badgeClass = isGreen ? 'tenor-green' : isRed ? 'tenor-red' : 'tenor-yellow';
+  const label = isGreen ? '🟢 Positive' : isRed ? '🔴 Negative' : '🟡 Mixed';
+  const summary = line.replace(/[🟢🟡🔴]\s*(Positive|Mixed|Negative)\s*[—-]?\s*/i, '').trim();
+  replaceSection(id, `
+    <div class="section-header"><div class="section-title">🗞️ Recent Press Tenor</div></div>
+    <div class="section-body">
+      <div class="tenor-badge ${badgeClass}">${label}</div>
+      <div>${formatText(summary)}</div>
+    </div>`);
 }
 
-function renderMarkdownToHTML(md) {
+function renderKeySignals(id, text, role) {
+  const match = text.match(/### Key Signals[^\n]*([\s\S]*?)(?=###|$)/i);
+  const content = match ? match[0] : '';
+  const title = role ? `Key Signals for a ${role}` : 'Key Signals';
+  replaceSection(id, `
+    <div class="section-header"><div class="section-title">🚦 ${title}</div></div>
+    <div class="section-body">${renderTable(content)}</div>`);
+}
+
+function renderCompetitive(id, text) {
+  const match = text.match(/### Competitive Position([\s\S]*?)(?=###|$)/i);
+  const content = match ? match[1].trim() : '';
+  replaceSection(id, `
+    <div class="section-header"><div class="section-title">⚔️ Competitive Position</div></div>
+    <div class="section-body">${formatText(content)}</div>`);
+}
+
+function renderChannelPresence(id, text) {
+  const match = text.match(/### Channel Presence[^\n]*([\s\S]*?)(?=###|$)/i);
+  const content = match ? match[1].trim() : text.trim();
+  const tableLines = content.split('\n').filter(l => l.includes('|') && !l.match(/^[\s|:-]+$/));
+  const nonTable = content.split('\n').filter(l => !l.includes('|')).join('\n').trim();
   let html = '';
-  const lines = md.split('\n');
-  let i = 0;
-
-  // Extract score for banner
-  const scoreMatch = md.match(/Overall Score:\s*(\d+)\s*\/\s*100\s*[—-]\s*(.+)/i);
-  if (scoreMatch) {
-    const score = parseInt(scoreMatch[1]);
-    const verdict = scoreMatch[2].trim().replace(/\*+/g, '');
-    let verdictClass = 'verdict-strong';
-    if (score < 85 && score >= 70) verdictClass = 'verdict-promising';
-    else if (score < 70 && score >= 50) verdictClass = 'verdict-caution';
-    else if (score < 50) verdictClass = 'verdict-risk';
-
-    let scoreColor = '#10b981';
-    if (score < 85 && score >= 70) scoreColor = '#d97706';
-    else if (score < 70 && score >= 50) scoreColor = '#ea580c';
-    else if (score < 50) scoreColor = '#dc2626';
-
-    html += `<div class="score-banner">
-      <div class="score-left">
-        <div class="score-label">Overall Score</div>
-        <div class="score-number" style="color:${scoreColor}">${score}<span class="denom"> / 100</span></div>
-      </div>
-      <div class="score-verdict ${verdictClass}">${getVerdictEmoji(verdict)} ${verdict}</div>
-    </div>`;
+  if (tableLines.length >= 2) {
+    const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
+    const rows = tableLines.slice(1);
+    html += `<table class="report-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+    rows.forEach(row => {
+      const cells = row.split('|').map(c => c.trim()).filter(Boolean);
+      if (cells.length) html += `<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
+    });
+    html += `</tbody></table>`;
   }
-
-  // Process remaining content into sections
-  const sections = md.split(/\n(?=###\s)/);
-  for (const section of sections) {
-    const titleMatch = section.match(/^###\s+(.+)/);
-    if (!titleMatch) continue;
-
-    const title = titleMatch[1].replace(/\*+/g, '').trim();
-    const content = section.replace(/^###\s+.+\n/, '').trim();
-
-    if (title.toLowerCase().includes('overall score')) continue;
-
-    // Score sections
-    const scored = title.match(/—\s*([\d]+)\/([\d]+)/);
-    const sectionTitle = title.replace(/—.*$/, '').trim();
-
-    let sectionHTML = `<div class="report-section">
-      <div class="section-header">
-        <div class="section-title">${getSectionIcon(sectionTitle)} ${sectionTitle}</div>
-        ${scored ? `<div class="section-score">${scored[1]} / ${scored[2]}</div>` : ''}
-      </div>
-      <div class="section-body">`;
-
-    if (title.toLowerCase().includes('press tenor')) {
-      sectionHTML += renderPressTenor(content);
-    } else if (title.toLowerCase().includes('key signals')) {
-      sectionHTML += renderTable(content);
-    } else if (title.toLowerCase().includes('channel presence')) {
-      sectionHTML += renderChannelPresence(content);
-    } else if (title.toLowerCase().includes('interview')) {
-      sectionHTML += renderInterviewQuestions(content);
-    } else {
-      sectionHTML += escapeAndFormat(content);
-    }
-
-    sectionHTML += `</div></div>`;
-    html += sectionHTML;
-  }
-
-  return html;
+  if (nonTable) html += `<div style="margin-top:12px;font-size:13.5px;color:var(--slate-600);font-style:italic">${formatText(nonTable)}</div>`;
+  replaceSection(id, `
+    <div class="section-header"><div class="section-title">🤝 Channel Presence Snapshot</div></div>
+    <div class="section-body">${html || formatText(text)}</div>`);
 }
 
-function renderPressTenor(content) {
-  const greenMatch = content.match(/🟢/);
-  const yellowMatch = content.match(/🟡/);
-  const redMatch = content.match(/🔴/);
-  let badgeClass = 'tenor-green', label = '🟢 Positive';
-  if (yellowMatch) { badgeClass = 'tenor-yellow'; label = '🟡 Mixed'; }
-  if (redMatch) { badgeClass = 'tenor-red'; label = '🔴 Negative'; }
+function renderInterviewQuestions(id, text) {
+  const askMatch = text.match(/\*\*Questions to Ask Them[:\*]*([\s\S]*?)(?=\*\*Questions to Prepare|\*\*Prepare|$)/i);
+  const prepMatch = text.match(/\*\*Questions to Prepare For[:\*]*([\s\S]*?)$/i);
 
-  const summary = content.replace(/[🟢🟡🔴]\s*(Positive|Mixed|Negative)\s*[—-]?\s*/i, '').trim();
-  return `<div class="tenor-badge ${badgeClass}">${label}</div><div>${escapeAndFormat(summary)}</div>`;
+  function parseQs(block) {
+    if (!block) return '';
+    let html = '';
+    const items = block.trim().split(/\n(?=\d+\.)/);
+    items.forEach(item => {
+      if (!item.trim()) return;
+      const noteMatch = item.match(/\(Note:\s*([\s\S]*?)\)/i);
+      const note = noteMatch ? noteMatch[1].trim() : null;
+      const qText = item.replace(/^\d+\.\s*/, '').replace(/\(Note:[\s\S]*?\)/i, '').replace(/\*\*/g, '').trim();
+      if (!qText) return;
+      html += `<div class="question-block">
+        <div class="question-text">${escapeHtml(qText)}</div>
+        ${note ? `<div class="question-note">→ ${escapeHtml(note)}</div>` : ''}
+      </div>`;
+    });
+    return html;
+  }
+
+  const askHTML = parseQs(askMatch ? askMatch[1] : '');
+  const prepHTML = parseQs(prepMatch ? prepMatch[1] : '');
+
+  replaceSection(id, `
+    <div class="section-header"><div class="section-title">🎯 Interview Questions</div></div>
+    <div class="section-body">
+      ${askHTML ? `<div class="question-set-label" style="color:var(--amber)">💬 Questions to Ask Them</div>${askHTML}` : ''}
+      ${prepHTML ? `<div class="question-set-label" style="color:var(--slate-500);margin-top:20px">🎯 Questions to Prepare For</div>${prepHTML}` : ''}
+    </div>`);
 }
 
 function renderTable(content) {
   const rows = content.split('\n').filter(l => l.includes('|') && !l.match(/^[\s|:-]+$/));
-  if (rows.length < 2) return escapeAndFormat(content);
-
+  if (rows.length < 2) return formatText(content.replace(/###[^\n]*\n/, ''));
   const headers = rows[0].split('|').map(h => h.trim()).filter(Boolean);
   const dataRows = rows.slice(1);
-
-  let table = `<table class="report-table"><thead><tr>`;
-  headers.forEach(h => { table += `<th>${h}</th>`; });
-  table += `</tr></thead><tbody>`;
-
+  let html = `<table class="report-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
   dataRows.forEach(row => {
     const cells = row.split('|').map(c => c.trim()).filter(Boolean);
-    if (cells.length === 0) return;
-    table += `<tr>`;
-    cells.forEach(c => { table += `<td>${c}</td>`; });
-    table += `</tr>`;
+    if (cells.length) html += `<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
   });
-
-  table += `</tbody></table>`;
-  const nonTable = content.split('\n').filter(l => !l.includes('|')).join('\n').trim();
-  if (nonTable) table += `<div style="margin-top:12px;font-size:13.5px;color:var(--slate-600)">${escapeAndFormat(nonTable)}</div>`;
-  return table;
+  return html + `</tbody></table>`;
 }
 
-function renderChannelPresence(content) {
-  const tableLines = content.split('\n').filter(l => l.includes('|') && !l.match(/^[\s|:-]+$/));
-  const nonTableLines = content.split('\n').filter(l => !l.includes('|')).join('\n').trim();
-
-  let out = '';
-  if (tableLines.length >= 2) {
-    const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
-    const dataRows = tableLines.slice(1);
-    out += `<table class="report-table"><thead><tr>`;
-    headers.forEach(h => { out += `<th>${h}</th>`; });
-    out += `</tr></thead><tbody>`;
-    dataRows.forEach(row => {
-      const cells = row.split('|').map(c => c.trim()).filter(Boolean);
-      if (!cells.length) return;
-      out += `<tr>`;
-      cells.forEach(c => { out += `<td>${c}</td>`; });
-      out += `</tr>`;
-    });
-    out += `</tbody></table>`;
-  }
-
-  if (nonTableLines) {
-    out += `<div style="margin-top:12px;font-size:13.5px;color:var(--slate-600);font-style:italic">${escapeAndFormat(nonTableLines)}</div>`;
-  }
-  return out;
-}
-
-function renderInterviewQuestions(content) {
-  let out = '';
-  const sections = content.split(/\*\*Questions to (Ask Them|Prepare For)[:\*]*/i);
-
-  for (let i = 1; i < sections.length; i += 2) {
-    const label = sections[i];
-    const body = sections[i + 1] || '';
-    const isAsk = label.toLowerCase().includes('ask');
-
-    out += `<div style="margin-bottom:20px">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:${isAsk ? 'var(--amber)' : 'var(--slate-500)'};margin-bottom:12px">
-        ${isAsk ? '💬 Questions to Ask Them' : '🎯 Questions to Prepare For'}
-      </div>`;
-
-    // Parse question + note pairs
-    const items = body.trim().split(/\n(?=\d+\.|[-•]|\*\*[^*])/);
-    items.forEach(item => {
-      if (!item.trim()) return;
-      const noteMatch = item.match(/\(Note:\s*(.+?)\)/is) || item.match(/\*Note:\*\s*(.+)/i);
-      const note = noteMatch ? noteMatch[1].trim() : null;
-      const qText = item
-        .replace(/^\d+\.\s*/, '')
-        .replace(/^[-•]\s*/, '')
-        .replace(/\(Note:.*?\)/is, '')
-        .replace(/\*Note:\*.*/i, '')
-        .replace(/\*\*/g, '')
-        .trim();
-
-      if (!qText) return;
-      out += `<div class="question-block">
-        <div class="question-text">${qText}</div>
-        ${note ? `<div class="question-note">→ ${note}</div>` : ''}
-      </div>`;
-    });
-
-    out += `</div>`;
-  }
-
-  return out || escapeAndFormat(content);
-}
-
-function escapeAndFormat(text) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+function formatText(text) {
+  return escapeHtml(text)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>');
 }
 
-function getSectionIcon(title) {
-  const t = title.toLowerCase();
-  if (t.includes('gartner') || t.includes('analyst')) return '📊';
-  if (t.includes('financial') || t.includes('health')) return '💰';
-  if (t.includes('customer') || t.includes('product')) return '⭐';
-  if (t.includes('community') || t.includes('employee')) return '👥';
-  if (t.includes('press') || t.includes('tenor')) return '🗞️';
-  if (t.includes('signal')) return '🚦';
-  if (t.includes('competitive') || t.includes('position')) return '⚔️';
-  if (t.includes('channel')) return '🤝';
-  if (t.includes('interview')) return '🎯';
-  return '📋';
+function escapeHtml(text) {
+  return (text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function getVerdictEmoji(verdict) {
-  const v = verdict.toLowerCase();
-  if (v.includes('strong')) return '✅';
-  if (v.includes('promising')) return '🟡';
-  if (v.includes('caution')) return '⚠️';
-  if (v.includes('risk')) return '🔴';
+function getVerdictEmoji(v) {
+  if (!v) return '📊';
+  const vl = v.toLowerCase();
+  if (vl.includes('strong')) return '✅';
+  if (vl.includes('promising')) return '🟡';
+  if (vl.includes('caution')) return '⚠️';
+  if (vl.includes('risk')) return '🔴';
   return '📊';
 }
 
 async function copyReport() {
-  if (!currentReport.markdown) return;
+  const allText = reportData.sections.map(s => s.text).join('\n\n---\n\n');
+  const full = `${reportData.company} — Market Viability Score\n${reportData.role}\nGenerated ${reportData.generatedAt}\n\n${allText}`;
   try {
-    await navigator.clipboard.writeText(`${currentReport.company} — Market Viability Score\n${currentReport.role}\nGenerated ${currentReport.generatedAt}\n\n${currentReport.markdown}`);
+    await navigator.clipboard.writeText(full);
     const btn = document.getElementById('copy-btn');
     btn.classList.add('copied');
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
@@ -1029,22 +608,21 @@ async function copyReport() {
       btn.classList.remove('copied');
       btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
     }, 2500);
-  } catch (e) {}
+  } catch(e) {}
 }
 
 function downloadReport() {
-  if (!currentReport.markdown) return;
-  const content = `${currentReport.company} — Market Viability Score\n${currentReport.role}\nGenerated ${currentReport.generatedAt}\n\n${currentReport.markdown}`;
-  const blob = new Blob([content], { type: 'text/plain' });
+  const allText = reportData.sections.map(s => s.text).join('\n\n---\n\n');
+  const full = `${reportData.company} — Market Viability Score\n${reportData.role}\nGenerated ${reportData.generatedAt}\n\n${allText}`;
+  const blob = new Blob([full], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${currentReport.company.replace(/\s+/g, '_')}_Market_Viability_Score.txt`;
+  a.download = `${reportData.company.replace(/\s+/g, '_')}_Market_Viability_Score.txt`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
-// Enter key support
 document.addEventListener('DOMContentLoaded', () => {
   ['company-input', 'role-input', 'industry-input'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => {
