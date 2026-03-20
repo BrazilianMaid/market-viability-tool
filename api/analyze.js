@@ -12,8 +12,8 @@ export default async function handler(req, res) {
   const roleStr = role || 'tech sales role';
   const industryStr = industry ? ` (${industry})` : '';
 
-  // Strip web search narration before passing context forward
-  function cleanContext(text) {
+  // Strip narration lines from any text block
+  function stripNarration(text) {
     if (!text) return '';
     return text
       .split('\n')
@@ -21,13 +21,21 @@ export default async function handler(req, res) {
         const l = line.toLowerCase().trim();
         return !(
           l.startsWith("i'll") ||
+          l.startsWith("i will") ||
           l.startsWith("let me") ||
           l.startsWith("now let me") ||
-          l.startsWith("i will") ||
+          l.startsWith("now i") ||
+          l.startsWith("now,") ||
           l.startsWith("first,") ||
           l.startsWith("next,") ||
           l.startsWith("searching") ||
           l.startsWith("looking") ||
+          l.startsWith("based on my research") ||
+          l.startsWith("based on the") ||
+          l.startsWith("here is") ||
+          l.startsWith("here's") ||
+          l.startsWith("i have") ||
+          l.startsWith("i've") ||
           l === ''
         );
       })
@@ -35,9 +43,9 @@ export default async function handler(req, res) {
       .trim();
   }
 
-  // Tight summary for steps that need prior context — scored lines only
+  // Tight summary for steps that need prior context
   function summarizeForContext(text) {
-    const clean = cleanContext(text);
+    const clean = stripNarration(text);
     const lines = clean.split('\n').filter(l =>
       l.includes('###') ||
       l.includes('Overall Score') ||
@@ -50,7 +58,7 @@ export default async function handler(req, res) {
   const prompts = {
 
     // ── STEP 1: Scored categories ──
-    1: `Research ${company}${industryStr}. Run a maximum of 3 web searches total. Return ONLY this exact structure:
+    1: `Research ${company}${industryStr}. Run a maximum of 3 web searches total. Return ONLY this exact structure with NO preamble, NO opening sentence, NO narration:
 
 ### Gartner / Analyst Recognition — [X]/25
 [2 sentences: what analyst recognition exists and recency. Score 0-11 if none found.]
@@ -66,13 +74,13 @@ export default async function handler(req, res) {
 
 ### Overall Score: [sum] / 100 — [Strong Buy / Promising / Proceed with Caution / High Risk]
 
-Numbers only where verified. Score conservatively if data is missing. No preamble.`,
+Start your response with "### Gartner" — nothing before it. Numbers only where verified.`,
 
     // ── STEP 2: Context layers ──
-    2: `Research ${company}${industryStr}. Run a maximum of 2 web searches. Use this prior research as context:
+    2: `Research ${company}${industryStr}. Run a maximum of 2 web searches. Prior research context:
 ${summarizeForContext(context)}
 
-Return ONLY this exact structure:
+Return ONLY this exact structure with NO preamble:
 
 ### Recent Press Tenor
 [🟢 Positive / 🟡 Mixed / 🔴 Negative] — [One sentence on last 90 days.]
@@ -89,7 +97,7 @@ Return ONLY this exact structure:
 ### Competitive Position
 [2 short paragraphs on closest competitors and encroachment risk.]
 
-No preamble. Role-specific signals only.`,
+Start your response with "### Recent Press Tenor" — nothing before it.`,
 
     // ── STEP 3: Channel presence ──
     3: `Research the channel presence for ${company}. Run a maximum of 4 web searches.
@@ -97,7 +105,7 @@ No preamble. Role-specific signals only.`,
 Step 1: Find ${company}'s partner or reseller page and list named VARs.
 Step 2: For each found, plus any unchecked from: CDW (cdw.com), SHI (shi.com), Insight (insight.com), Connection (connection.com), Softchoice (softchoice.com), WWT (wwt.com), Optiv (optiv.com), GuidePoint (guidepointsecurity.com), Presidio (presidio.com), Trace3 (trace3.com) — search "[company name] site:[domain]".
 
-Return ONLY this exact structure:
+Return ONLY this exact structure with NO preamble:
 
 ### Channel Presence Snapshot
 | Reseller | Type | On Vendor Site | On Reseller Site |
@@ -106,15 +114,15 @@ Return ONLY this exact structure:
 
 [One sentence on what the channel footprint signals.]
 
-No preamble.`,
+Start your response with "### Channel Presence Snapshot" — nothing before it.`,
 
     // ── STEP 4: Interview questions ──
     4: `You are helping a ${roleStr} candidate prepare for an interview at ${company}${industryStr}.
 
-Summary of research findings:
+Research summary:
 ${summarizeForContext(context)}
 
-Return ONLY this exact structure:
+Return ONLY this exact structure with NO preamble:
 
 ### Interview Questions
 
@@ -142,11 +150,14 @@ Return ONLY this exact structure:
 5. [Question]
 (Note: [note])
 
-No preamble. Make every question specific to ${company} and the ${roleStr} role.`
+Start your response with "### Interview Questions" — nothing before it.`
   };
 
   const prompt = prompts[step];
   if (!prompt) return res.status(400).json({ error: `Invalid step: ${step}` });
+
+  // Step 1 needs more tokens — covers 4 categories at once
+  const maxTokens = step === 1 ? 1200 : 800;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -158,9 +169,9 @@ No preamble. Make every question specific to ${company} and the ${roleStr} role.
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 800,
+        max_tokens: maxTokens,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        system: 'You are a concise market intelligence analyst. Search the web only as many times as instructed — no more. Return only the requested structure with no preamble, no commentary, and no narration like "let me search" or "now I will". Never fabricate data. Score conservatively if data is missing.',
+        system: 'You are a concise market intelligence analyst. Search only as many times as instructed. Your response must begin immediately with the first ### heading — no opening sentence, no preamble, no narration of any kind. Never fabricate data. Score conservatively if data is missing.',
         messages: [{ role: 'user', content: prompt }]
       })
     });
@@ -172,11 +183,13 @@ No preamble. Make every question specific to ${company} and the ${roleStr} role.
 
     const data = await response.json();
 
-    // Take the LAST text block — final report, not search narration
+    // Take the LAST text block, then strip any remaining narration
     const textBlocks = data.content.filter(b => b.type === 'text');
-    const text = textBlocks.length > 0
+    const raw = textBlocks.length > 0
       ? textBlocks[textBlocks.length - 1].text
       : '';
+
+    const text = stripNarration(raw);
 
     return res.status(200).json({ result: text, step });
 
