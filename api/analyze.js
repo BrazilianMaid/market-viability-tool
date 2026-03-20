@@ -52,32 +52,32 @@ export default async function handler(req, res) {
       l.match(/^\s*[-•]/) ||
       l.match(/\d+\/\d+/)
     );
-    return lines.slice(0, 30).join('\n');
+    return lines.slice(0, 25).join('\n');
   }
 
   const prompts = {
 
-    // ── STEP 1: Scored categories ──
-    1: `Research ${company}${industryStr}. Run a maximum of 3 web searches total. Return ONLY this exact structure with NO preamble, NO opening sentence, NO narration:
+    // ── STEP 1: Scored categories — max 2 searches ──
+    1: `Research ${company}${industryStr}. Run a maximum of 2 web searches total. Return ONLY this exact structure with NO preamble, NO opening sentence, NO narration:
 
 ### Gartner / Analyst Recognition — [X]/25
-[2 sentences: what analyst recognition exists and recency. Score 0-11 if none found.]
+[2 sentences max: analyst recognition and recency. Score 0-11 if none found.]
 
 ### Financial Health & Growth — [X]/30
-[2 sentences: funding stage, valuation, ARR if known, headcount direction. Flag layoffs if found.]
+[2 sentences max: funding, valuation, ARR if known, headcount direction. Flag layoffs.]
 
 ### Customer & Product Sentiment — [X]/25
-[2 sentences: G2 or Gartner Peer Insights star rating, review count, key themes.]
+[2 sentences max: G2 or Gartner Peer Insights star rating, review count, key themes.]
 
 ### Community & Employee Sentiment — [X]/20
-[2 sentences: Glassdoor rating and recommend %, RepVue score if available, sales org notes.]
+[2 sentences max: Glassdoor rating and recommend %, RepVue score if available.]
 
 ### Overall Score: [sum] / 100 — [Strong Buy / Promising / Proceed with Caution / High Risk]
 
 Start your response with "### Gartner" — nothing before it. Numbers only where verified.`,
 
-    // ── STEP 2: Context layers ──
-    2: `Research ${company}${industryStr}. Run a maximum of 2 web searches. Prior research context:
+    // ── STEP 2: Context layers — max 1 search ──
+    2: `Research ${company}${industryStr}. Run a maximum of 1 web search. Prior research:
 ${summarizeForContext(context)}
 
 Return ONLY this exact structure with NO preamble:
@@ -99,24 +99,30 @@ Return ONLY this exact structure with NO preamble:
 
 Start your response with "### Recent Press Tenor" — nothing before it.`,
 
-    // ── STEP 3: Channel presence ──
-    3: `Research the channel presence for ${company}. Run a maximum of 4 web searches.
+    // ── STEP 3: Channel presence — max 2 searches, vendor site only ──
+    3: `Research the channel presence for ${company}. Run a maximum of 2 web searches.
 
-Step 1: Find ${company}'s partner or reseller page and list named VARs.
-Step 2: For each found, plus any unchecked from: CDW (cdw.com), SHI (shi.com), Insight (insight.com), Connection (connection.com), Softchoice (softchoice.com), WWT (wwt.com), Optiv (optiv.com), GuidePoint (guidepointsecurity.com), Presidio (presidio.com), Trace3 (trace3.com) — search "[company name] site:[domain]".
+Search 1: Find ${company}'s partners, resellers, or alliances page on their website. List every named partner, reseller, VAR, or distributor. Note their type where clear (broad-line reseller, security VAR, GSI, hyperscaler, technology alliance, distributor).
+
+Search 2: Check if ${company} has a partner portal, partner program page, or partner login. Look for: deal registration, MDF/co-op funds, partner tiers, enablement/training, or a dedicated partner login.
 
 Return ONLY this exact structure with NO preamble:
 
 ### Channel Presence Snapshot
-| Reseller | Type | On Vendor Site | On Reseller Site |
-|---|---|---|---|
-| [name] | [Broad-line / Security-specialist] | [✅ Listed / ⚪ Not listed] | [✅ Active / ⚪ Not surfacing] |
 
-[One sentence on what the channel footprint signals.]
+**Partners & Resellers Listed on Vendor Site:**
+| Partner | Type |
+|---|---|
+| [name] | [Broad-line / Security VAR / GSI / Hyperscaler / Technology Alliance / Distributor] |
+
+**Partner Program:**
+[🟢 Robust — describe what's available / 🟡 Basic — describe what exists / 🔴 Minimal or none found]
+
+[One sentence on what the channel footprint signals for a partner manager joining this company.]
 
 Start your response with "### Channel Presence Snapshot" — nothing before it.`,
 
-    // ── STEP 4: Interview questions ──
+    // ── STEP 4: Interview questions — NO web search ──
     4: `You are helping a ${roleStr} candidate prepare for an interview at ${company}${industryStr}.
 
 Research summary:
@@ -159,7 +165,22 @@ Start your response with "### Interview Questions" — nothing before it.`
   // Step 1 needs more tokens — covers 4 categories at once
   const maxTokens = step === 1 ? 1200 : 800;
 
+  // Step 4 doesn't need web search — saves tokens and cost
+  const tools = step === 4
+    ? []
+    : [{ type: 'web_search_20250305', name: 'web_search' }];
+
   try {
+    const body = {
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: maxTokens,
+      system: 'You are a concise market intelligence analyst. Search only as many times as instructed — no more. Your response must begin immediately with the first ### heading — no opening sentence, no preamble, no narration of any kind. Never fabricate data. Score conservatively if data is missing.',
+      messages: [{ role: 'user', content: prompt }]
+    };
+
+    // Only include tools if needed
+    if (tools.length > 0) body.tools = tools;
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -167,13 +188,7 @@ Start your response with "### Interview Questions" — nothing before it.`
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: maxTokens,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        system: 'You are a concise market intelligence analyst. Search only as many times as instructed. Your response must begin immediately with the first ### heading — no opening sentence, no preamble, no narration of any kind. Never fabricate data. Score conservatively if data is missing.',
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify(body)
     });
 
     if (!response.ok) {
