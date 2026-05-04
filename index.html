@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Viability Score — Tech Sales Intelligence</title>
+<title>Market Viability Score — Company Intelligence for Job Seekers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -24,12 +24,15 @@
     --amber-pale: #fef3c7;
     --green:     #059669;
     --green-pale: #d1fae5;
+    --yellow:    #d97706;
     --yellow-pale: #fef9c3;
     --red:       #dc2626;
     --red-pale:  #fee2e2;
     --white:     #ffffff;
   }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--slate-50);
@@ -38,6 +41,8 @@
     font-size: 15px;
     line-height: 1.6;
   }
+
+  /* ── HEADER ── */
   header {
     background: var(--slate-900);
     border-bottom: 1px solid var(--slate-800);
@@ -50,134 +55,1194 @@
     top: 0;
     z-index: 100;
   }
-  .header-brand { display: flex; align-items: baseline; gap: 10px; }
-  .header-brand h1 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--white); }
+  .header-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .header-brand h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--white);
+    letter-spacing: -0.3px;
+  }
   .header-brand span {
-    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--amber-light);
-    text-transform: uppercase; letter-spacing: 2px;
-    background: rgba(217,119,6,0.15); padding: 2px 7px; border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--amber-light);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: rgba(217,119,6,0.15);
+    padding: 2px 7px;
+    border-radius: 3px;
     border: 1px solid rgba(217,119,6,0.3);
   }
-  .header-note { font-size: 12px; color: var(--slate-500); font-style: italic; }
-  .app-layout { display: grid; grid-template-columns: 380px 1fr; min-height: calc(100vh - 60px); }
+  .header-note {
+    font-size: 12px;
+    color: var(--slate-500);
+    font-style: italic;
+  }
+
+  /* ── LAYOUT ── */
+  .app-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* ── LEFT PANEL ── */
   .left-panel {
-    background: var(--white); border-right: 1px solid var(--slate-200);
-    padding: 32px 28px; display: flex; flex-direction: column; gap: 28px;
-    position: sticky; top: 60px; height: calc(100vh - 60px); overflow-y: auto;
+    background: var(--white);
+    border-right: 1px solid var(--slate-200);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
   }
-  .panel-intro h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--slate-900); line-height: 1.3; margin-bottom: 8px; }
-  .panel-intro p { font-size: 13.5px; color: var(--slate-500); line-height: 1.6; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-600); }
-  .form-group input {
-    width: 100%; padding: 10px 13px; border: 1.5px solid var(--slate-200); border-radius: 6px;
-    font-family: 'DM Sans', sans-serif; font-size: 14.5px; color: var(--slate-900);
-    background: var(--slate-50); transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+
+  .panel-intro h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--slate-900);
+    line-height: 1.3;
+    margin-bottom: 8px;
   }
-  .form-group input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(217,119,6,0.1); background: var(--white); }
+  .panel-intro p {
+    font-size: 13.5px;
+    color: var(--slate-500);
+    line-height: 1.6;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--slate-600);
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1.5px solid var(--slate-200);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    color: var(--slate-900);
+    background: var(--slate-50);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(217,119,6,0.1);
+    background: var(--white);
+  }
   .form-group input::placeholder { color: var(--slate-400); }
-  .optional-label { font-size: 10px; color: var(--slate-400); font-style: italic; margin-left: 4px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%2364748b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    padding-right: 34px;
+    cursor: pointer;
+  }
+  .role-tagline {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--slate-500);
+    font-style: italic;
+    line-height: 1.5;
+    min-height: 18px;
+  }
+
+  .optional-label {
+    font-size: 10px;
+    color: var(--slate-400);
+    font-style: italic;
+    margin-left: 4px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
   .run-btn {
-    width: 100%; padding: 13px; background: var(--slate-900); color: var(--white);
-    border: none; border-radius: 7px; font-family: 'DM Sans', sans-serif;
-    font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px;
-    transition: background 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%;
+    padding: 13px;
+    background: var(--slate-900);
+    color: var(--white);
+    border: none;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
   .run-btn:hover:not(:disabled) { background: var(--slate-700); }
   .run-btn:active:not(:disabled) { transform: scale(0.99); }
   .run-btn:disabled { background: var(--slate-300); cursor: not-allowed; }
-  .framework-card { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px; padding: 16px; }
-  .framework-card h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-500); margin-bottom: 12px; }
-  .framework-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--slate-200); font-size: 13px; }
+
+  /* ── FRAMEWORK CARD ── */
+  .framework-card {
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .framework-card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--slate-500);
+    margin-bottom: 12px;
+  }
+  .framework-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--slate-200);
+    font-size: 13px;
+  }
   .framework-row:last-child { border-bottom: none; }
   .framework-row .label { color: var(--slate-600); }
-  .framework-row .pts { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--amber); font-weight: 500; }
-  .framework-unscored { margin-top: 10px; font-size: 12px; color: var(--slate-500); font-style: italic; line-height: 1.5; }
-  .right-panel { padding: 40px 48px; max-width: 860px; }
+  .framework-row .pts {
+    font-family: 'DM Mono', monospace;
+    font-size: 11.5px;
+    color: var(--amber);
+    font-weight: 500;
+  }
+  .framework-unscored {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--slate-500);
+    font-style: italic;
+    line-height: 1.5;
+  }
 
-  /* Empty state */
-  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; text-align: center; gap: 16px; }
-  .empty-icon { width: 56px; height: 56px; background: var(--slate-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .empty-state h3 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--slate-700); }
-  .empty-state p { font-size: 14px; color: var(--slate-400); max-width: 340px; line-height: 1.6; }
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    padding: 40px 48px;
+    max-width: 860px;
+  }
 
-  /* Progress bar */
-  .progress-bar-wrap { display: none; margin-bottom: 28px; }
-  .progress-bar-wrap.active { display: block; }
-  .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: var(--slate-500); }
-  .progress-label .current-step { color: var(--amber); font-weight: 600; }
-  .progress-track { height: 4px; background: var(--slate-200); border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--amber); border-radius: 99px; transition: width 0.5s ease; width: 0%; }
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    gap: 16px;
+  }
+  .empty-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--slate-100);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .empty-state h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--slate-700);
+  }
+  .empty-state p {
+    font-size: 14px;
+    color: var(--slate-400);
+    max-width: 340px;
+    line-height: 1.6;
+  }
 
-  /* Report header */
-  .report-header { display: none; margin-bottom: 24px; }
-  .report-header.active { display: block; }
-  .report-toolbar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--slate-200); }
-  .report-company { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--slate-900); line-height: 1.2; }
-  .report-role { font-size: 13px; color: var(--slate-500); margin-top: 3px; }
-  .report-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  /* ── LOADING STATE ── */
+  .loading-state {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 0;
+  }
+  .loading-state.active { display: flex; }
+  .loading-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--slate-200);
+    border-top-color: var(--amber);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--slate-800);
+  }
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 34px;
+  }
+  .loading-step {
+    font-size: 13.5px;
+    color: var(--slate-400);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+  }
+  .loading-step.active { color: var(--slate-700); }
+  .loading-step.done { color: var(--green); }
+  .step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* ── REPORT ── */
+  .report { display: none; }
+  .report.active { display: block; }
+
+  .report-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .report-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .report-company {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--slate-900);
+    line-height: 1.2;
+  }
+  .report-role {
+    font-size: 13px;
+    color: var(--slate-500);
+  }
+  .report-actions {
+    display: flex;
+    gap: 8px;
+  }
   .action-btn {
-    display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 6px;
-    font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer;
-    transition: all 0.15s; border: 1.5px solid var(--slate-200); background: var(--white); color: var(--slate-700);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1.5px solid var(--slate-200);
+    background: var(--white);
+    color: var(--slate-700);
   }
   .action-btn:hover { border-color: var(--slate-400); color: var(--slate-900); }
   .action-btn.copied { border-color: var(--green); color: var(--green); background: var(--green-pale); }
 
-  /* Score banner */
-  .score-banner { background: var(--slate-900); border-radius: 10px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; opacity: 0; transition: opacity 0.4s ease; }
-  .score-banner.visible { opacity: 1; }
-  .score-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-400); margin-bottom: 4px; }
-  .score-number { font-family: 'DM Mono', monospace; font-size: 48px; font-weight: 500; line-height: 1; }
-  .score-number .denom { font-size: 22px; color: var(--slate-500); }
-  .score-verdict { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 100px; font-weight: 600; font-size: 14px; }
+  /* ── SCORE BANNER ── */
+  .score-banner {
+    background: var(--slate-900);
+    border-radius: 10px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .score-left { display: flex; flex-direction: column; gap: 4px; }
+  .score-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--slate-400);
+  }
+  .score-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .score-number .denom {
+    font-size: 22px;
+    color: var(--slate-500);
+  }
+  .score-verdict {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+  }
   .verdict-strong { background: var(--green-pale); color: var(--green); }
   .verdict-promising { background: var(--yellow-pale); color: #92400e; }
   .verdict-caution { background: #fff7ed; color: #c2410c; }
   .verdict-risk { background: var(--red-pale); color: var(--red); }
 
-  /* Sections */
-  .sections-container { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
-  .report-section { background: var(--white); border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
-  .report-section.visible { opacity: 1; transform: translateY(0); }
-  .report-section.loading-section { opacity: 1; transform: translateY(0); }
-  .section-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: var(--slate-50); border-bottom: 1px solid var(--slate-200); }
-  .section-title { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-600); }
-  .section-score { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--amber); font-weight: 500; }
-  .section-body { padding: 18px 20px; font-size: 14.5px; color: var(--slate-700); line-height: 1.7; }
+  /* ── REPORT SECTIONS ── */
+  .report-section {
+    margin-bottom: 28px;
+    background: var(--white);
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--slate-50);
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--slate-600);
+  }
+  .section-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--amber);
+    font-weight: 500;
+  }
+  .section-body {
+    padding: 18px 20px;
+    font-size: 14.5px;
+    color: var(--slate-700);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
 
-  /* Skeleton loader */
-  .skeleton-lines { display: flex; flex-direction: column; gap: 8px; }
-  .skeleton-line { height: 14px; background: linear-gradient(90deg, var(--slate-100) 25%, var(--slate-200) 50%, var(--slate-100) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
-  .skeleton-line.short { width: 60%; }
-  .skeleton-line.medium { width: 80%; }
-  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-  /* Tenor badge */
-  .tenor-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 4px; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  /* ── TENOR BADGE ── */
+  .tenor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
   .tenor-green { background: var(--green-pale); color: var(--green); }
   .tenor-yellow { background: var(--yellow-pale); color: #92400e; }
   .tenor-red { background: var(--red-pale); color: var(--red); }
 
-  /* Tables */
-  .report-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 4px; }
-  .report-table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-500); background: var(--slate-50); border-bottom: 1px solid var(--slate-200); }
-  .report-table td { padding: 9px 12px; border-bottom: 1px solid var(--slate-100); color: var(--slate-700); vertical-align: top; }
+  /* ── TABLE STYLES ── */
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 4px;
+  }
+  .report-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--slate-500);
+    background: var(--slate-50);
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .report-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--slate-100);
+    color: var(--slate-700);
+    vertical-align: top;
+  }
   .report-table tr:last-child td { border-bottom: none; }
   .report-table tr:hover td { background: var(--slate-50); }
 
-  /* Interview questions */
-  .question-block { margin-bottom: 12px; padding: 14px 16px; background: var(--slate-50); border-left: 3px solid var(--amber); border-radius: 0 6px 6px 0; }
-  .question-text { font-size: 14px; color: var(--slate-800); font-weight: 500; margin-bottom: 5px; line-height: 1.5; }
-  .question-note { font-size: 12.5px; color: var(--slate-500); font-style: italic; line-height: 1.5; }
-  .question-set-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; margin-top: 4px; }
+  /* ── INTERVIEW Q's ── */
+  .question-block {
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    background: var(--slate-50);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+  }
+  .question-text {
+    font-size: 14px;
+    color: var(--slate-800);
+    font-weight: 500;
+    margin-bottom: 5px;
+    line-height: 1.5;
+  }
+  .question-note {
+    font-size: 12.5px;
+    color: var(--slate-500);
+    font-style: italic;
+    line-height: 1.5;
+  }
 
-  /* Error */
-  .error-banner { display: none; background: var(--red-pale); border: 1px solid #fca5a5; border-radius: 7px; padding: 14px 18px; font-size: 14px; color: var(--red); margin-bottom: 20px; }
+  /* ── ERROR STATE ── */
+  .error-banner {
+    display: none;
+    background: var(--red-pale);
+    border: 1px solid #fca5a5;
+    border-radius: 7px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
   .error-banner.active { display: block; }
 
-  footer { text-align: center; padding: 32px; font-size: 12px; color: var(--slate-400); border-top: 1px solid var(--slate-200); margin-top: 40px; display: none; }
-  footer.active { display: block; }
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: var(--slate-400);
+    border-top: 1px solid var(--slate-200);
+    margin-top: 40px;
+  }
+  footer em { color: var(--slate-500); font-style: normal; }
+
+  /* ── HEADER TABS ── */
+  .header-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--slate-800);
+    border-radius: 7px;
+    padding: 3px;
+  }
+  .header-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border: none;
+    background: transparent;
+    color: var(--slate-400);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .header-tab:hover { color: var(--slate-200); }
+  .header-tab.active {
+    background: var(--slate-700);
+    color: var(--white);
+  }
+  .header-tab .tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: rgba(217,119,6,0.2);
+    color: var(--amber-light);
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+  }
+  .header-tab.active .tab-count {
+    background: rgba(217,119,6,0.35);
+    color: #fde68a;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--slate-900);
+    color: var(--white);
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s, opacity 0.25s;
+    z-index: 200;
+  }
+  .toast.active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .toast .toast-check {
+    width: 18px;
+    height: 18px;
+    background: var(--green);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── REPORTS VIEW ── */
+  .reports-view { display: none; }
+  .reports-view.active { display: block; }
+
+  .reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--slate-200);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .reports-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--slate-900);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .reports-header p {
+    font-size: 13px;
+    color: var(--slate-500);
+  }
+
+  .storage-meter {
+    min-width: 220px;
+    padding: 10px 14px;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 7px;
+  }
+  .storage-meter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: var(--slate-500);
+    margin-bottom: 6px;
+  }
+  .storage-meter-row .storage-pct {
+    font-family: 'DM Mono', monospace;
+    color: var(--slate-700);
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .storage-meter-bar {
+    height: 5px;
+    background: var(--slate-200);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .storage-meter-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    transition: width 0.3s, background 0.3s;
+  }
+  .storage-meter-fill.warn { background: var(--amber); }
+  .storage-meter-fill.danger { background: var(--red); }
+  .storage-meter-warning {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--red);
+    font-style: italic;
+  }
+
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .report-card {
+    background: var(--white);
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    padding: 18px 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+  }
+  .report-card:hover {
+    border-color: var(--slate-400);
+    box-shadow: 0 4px 12px -3px rgba(15,23,42,0.08);
+  }
+  .report-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .report-card-company {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--slate-900);
+    line-height: 1.25;
+    word-break: break-word;
+  }
+  .report-card-score {
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--slate-50);
+  }
+  .report-card-score.s-strong { color: var(--green); background: var(--green-pale); }
+  .report-card-score.s-promising { color: #92400e; background: var(--yellow-pale); }
+  .report-card-score.s-caution { color: #c2410c; background: #fff7ed; }
+  .report-card-score.s-risk { color: var(--red); background: var(--red-pale); }
+  .report-card-score.s-none { color: var(--slate-500); }
+
+  .report-card-role {
+    font-size: 12.5px;
+    color: var(--slate-600);
+    line-height: 1.5;
+  }
+  .report-card-role .role-sep {
+    color: var(--slate-300);
+    margin: 0 6px;
+  }
+
+  .report-card-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .report-card-section {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    padding: 2px 7px;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 3px;
+    color: var(--slate-600);
+  }
+
+  .report-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--slate-100);
+  }
+  .report-card-date {
+    font-size: 11.5px;
+    color: var(--slate-400);
+    font-family: 'DM Mono', monospace;
+  }
+  .report-card-delete {
+    background: transparent;
+    border: none;
+    color: var(--slate-400);
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.15s, background 0.15s;
+  }
+  .report-card-delete:hover {
+    color: var(--red);
+    background: var(--red-pale);
+  }
+
+  .empty-saved {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    text-align: center;
+    gap: 14px;
+    background: var(--white);
+    border: 1px dashed var(--slate-200);
+    border-radius: 10px;
+    padding: 48px 24px;
+  }
+  .empty-saved .empty-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--slate-100);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .empty-saved h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--slate-700);
+  }
+  .empty-saved p {
+    font-size: 14px;
+    color: var(--slate-400);
+    max-width: 360px;
+    line-height: 1.6;
+  }
+  .empty-saved button {
+    margin-top: 6px;
+    padding: 10px 18px;
+    background: var(--slate-900);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .empty-saved button:hover { background: var(--slate-700); }
+
+  /* ── COMPARE MODE ── */
+  .reports-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .compare-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    border: 1.5px solid var(--slate-200);
+    background: var(--white);
+    color: var(--slate-700);
+  }
+  .compare-btn:hover { border-color: var(--slate-400); color: var(--slate-900); }
+  .compare-btn.primary {
+    background: var(--slate-900);
+    color: var(--white);
+    border-color: var(--slate-900);
+  }
+  .compare-btn.primary:hover { background: var(--slate-700); border-color: var(--slate-700); }
+  .compare-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .compare-btn.cancel {
+    color: var(--slate-500);
+    border-color: transparent;
+    background: transparent;
+  }
+  .compare-btn.cancel:hover { color: var(--slate-900); background: var(--slate-100); }
+
+  .compare-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--slate-900);
+    color: var(--white);
+    border-radius: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .compare-banner-text {
+    font-size: 13.5px;
+    color: var(--slate-200);
+  }
+  .compare-banner-text strong {
+    color: var(--amber-light);
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .compare-banner-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .compare-banner .compare-btn {
+    background: transparent;
+    color: var(--slate-200);
+    border-color: var(--slate-700);
+  }
+  .compare-banner .compare-btn:hover {
+    color: var(--white);
+    border-color: var(--slate-500);
+    background: var(--slate-800);
+  }
+  .compare-banner .compare-btn.primary {
+    background: var(--amber);
+    color: var(--white);
+    border-color: var(--amber);
+  }
+  .compare-banner .compare-btn.primary:hover:not(:disabled) {
+    background: #b45309;
+    border-color: #b45309;
+  }
+  .compare-banner .compare-btn.primary:disabled {
+    background: var(--slate-700);
+    border-color: var(--slate-700);
+    color: var(--slate-500);
+  }
+
+  /* Selection state on report cards */
+  .report-card.selectable {
+    position: relative;
+    padding-left: 46px;
+  }
+  .report-card.selectable .compare-checkbox {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--slate-300);
+    border-radius: 5px;
+    background: var(--white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .report-card.selectable .compare-checkbox svg {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .report-card.selected {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 1px var(--amber), 0 4px 12px -3px rgba(217,119,6,0.18);
+  }
+  .report-card.selected .compare-checkbox {
+    background: var(--amber);
+    border-color: var(--amber);
+  }
+  .report-card.selected .compare-checkbox svg { opacity: 1; }
+  .report-card.disabled-select {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .report-card.disabled-select:hover {
+    border-color: var(--slate-200);
+    box-shadow: none;
+  }
+
+  /* ── COMPARISON VIEW ── */
+  .comparison-view { display: none; }
+  .comparison-view.active { display: block; }
+
+  .comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--slate-200);
+    flex-wrap: wrap;
+  }
+  .comparison-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--slate-900);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .comparison-header p {
+    font-size: 13px;
+    color: var(--slate-500);
+  }
+
+  .comparison-table-wrap {
+    background: var(--white);
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px -8px rgba(15,23,42,0.10);
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .comparison-table th,
+  .comparison-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--slate-100);
+    vertical-align: top;
+  }
+  .comparison-table thead th {
+    background: var(--slate-900);
+    color: var(--white);
+    border-bottom: none;
+    padding: 18px 16px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .comparison-table thead th.row-label-head {
+    background: var(--slate-900);
+    color: var(--slate-400);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    width: 180px;
+  }
+  .comparison-company-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .comparison-company-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--white);
+    line-height: 1.2;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    text-align: left;
+    transition: color 0.15s;
+  }
+  .comparison-company-name:hover {
+    color: var(--amber-light);
+    text-decoration: underline;
+  }
+  .comparison-company-role {
+    font-size: 12px;
+    color: var(--slate-400);
+    font-weight: 400;
+  }
+  .comparison-table tbody tr:hover td:not(.row-label) { background: var(--slate-50); }
+  .row-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--slate-500);
+    background: var(--slate-50);
+    width: 180px;
+  }
+  .comparison-overall-row td { padding-top: 18px; padding-bottom: 18px; }
+  .comparison-cell {
+    position: relative;
+  }
+  .comparison-score {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .comparison-score .denom {
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  .comparison-score.s-strong { color: var(--green); background: var(--green-pale); }
+  .comparison-score.s-promising { color: #92400e; background: var(--yellow-pale); }
+  .comparison-score.s-caution { color: #c2410c; background: #fff7ed; }
+  .comparison-score.s-risk { color: var(--red); background: var(--red-pale); }
+  .comparison-score.s-none { color: var(--slate-500); background: var(--slate-100); }
+  .comparison-score.is-best {
+    box-shadow: 0 0 0 2px var(--amber);
+    font-weight: 600;
+  }
+  .winner-tag {
+    display: inline-block;
+    margin-left: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--amber);
+    vertical-align: middle;
+  }
+  .comparison-verdict {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 100px;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .comparison-verdict.verdict-strong { background: var(--green-pale); color: var(--green); }
+  .comparison-verdict.verdict-promising { background: var(--yellow-pale); color: #92400e; }
+  .comparison-verdict.verdict-caution { background: #fff7ed; color: #c2410c; }
+  .comparison-verdict.verdict-risk { background: var(--red-pale); color: var(--red); }
+  .comparison-verdict.verdict-none { background: var(--slate-100); color: var(--slate-500); }
+  .quick-take-row td {
+    background: var(--slate-50);
+    font-size: 13.5px;
+    color: var(--slate-700);
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .quick-take-row .row-label { background: var(--slate-100); font-style: normal; }
+  .comparison-footer-row td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: none;
+  }
+  .view-full-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--amber);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .view-full-link:hover { text-decoration: underline; color: #b45309; }
+
+  /* Mobile / narrow: stack to one card per company */
+  .comparison-cards { display: none; }
+  @media (max-width: 720px) {
+    .comparison-table-wrap { display: none; }
+    .comparison-cards { display: flex; flex-direction: column; gap: 16px; }
+    .comparison-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px -6px rgba(15,23,42,0.08);
+    }
+    .comparison-card-header {
+      background: var(--slate-900);
+      color: var(--white);
+      padding: 16px 18px;
+    }
+    .comparison-card-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      line-height: 1.2;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      text-align: left;
+      padding: 0;
+      cursor: pointer;
+    }
+    .comparison-card-name:hover { color: var(--amber-light); text-decoration: underline; }
+    .comparison-card-role {
+      font-size: 12.5px;
+      color: var(--slate-400);
+      margin-top: 3px;
+    }
+    .comparison-card-body { padding: 14px 18px 18px; }
+    .comparison-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--slate-100);
+      gap: 12px;
+    }
+    .comparison-card-row:last-child { border-bottom: none; }
+    .comparison-card-row .row-label-mobile {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--slate-500);
+      flex: 1;
+      background: transparent;
+    }
+    .comparison-card-quick-take {
+      margin-top: 10px;
+      padding: 12px 14px;
+      background: var(--slate-50);
+      border-radius: 6px;
+      font-size: 13.5px;
+      color: var(--slate-700);
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .comparison-card-link {
+      margin-top: 14px;
+      display: block;
+      text-align: center;
+      padding: 10px;
+      border: 1.5px solid var(--slate-200);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--amber);
+      cursor: pointer;
+      background: var(--white);
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .comparison-card-link:hover { background: var(--slate-50); border-color: var(--slate-400); }
+    .comparison-header h2 { font-size: 22px; }
+  }
+
+  /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 10px; }
@@ -190,67 +1255,149 @@
     <h1>Market Viability Score</h1>
     <span>Beta</span>
   </div>
-  <div class="header-note">A research tool for tech sales job seekers</div>
+  <nav class="header-tabs" role="tablist">
+    <button class="header-tab active" id="tab-analysis" role="tab" onclick="switchView('analysis')">New Analysis</button>
+    <button class="header-tab" id="tab-reports" role="tab" onclick="switchView('reports')">
+      My Reports <span class="tab-count" id="tab-reports-count">0</span>
+    </button>
+  </nav>
+  <div class="header-note">A research tool for job seekers across functions</div>
 </header>
 
 <div class="app-layout">
+
+  <!-- LEFT PANEL -->
   <aside class="left-panel">
     <div class="panel-intro">
       <h2>Evaluate before you apply.</h2>
-      <p>Get a structured intelligence report on any company — analyst recognition, financial health, customer sentiment, employee culture, channel presence, and interview prep. Built for tech sales professionals.</p>
+      <p>Get a structured intelligence report on any company — analyst recognition, financial health, customer sentiment, employee culture, ecosystem presence, and interview prep. Tailored to your role.</p>
     </div>
+
     <div class="form-group">
       <label>Company Name</label>
       <input type="text" id="company-input" placeholder="e.g. Cyera, Glean, CrowdStrike" />
     </div>
+
     <div class="form-group">
-      <label>Role Title <span class="optional-label">optional but recommended</span></label>
-      <input type="text" id="role-input" placeholder="e.g. Channel Account Manager" />
+      <label>Role Category</label>
+      <select id="role-category-select"></select>
+      <div class="role-tagline" id="role-tagline"></div>
     </div>
+
+    <div class="form-group">
+      <label>Specific Job Title <span class="optional-label">optional, personalizes interview prep</span></label>
+      <input type="text" id="job-title-input" placeholder="e.g. Senior Channel Manager" />
+    </div>
+
     <div class="form-group">
       <label>Industry <span class="optional-label">optional</span></label>
       <input type="text" id="industry-input" placeholder="e.g. Data Security, Enterprise SaaS" />
     </div>
+
     <button class="run-btn" id="run-btn" onclick="runAnalysis()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Run Analysis
     </button>
+
     <div class="framework-card">
-      <h3>Scoring Framework</h3>
-      <div class="framework-row"><span class="label">Gartner / Analyst Recognition</span><span class="pts">25 pts</span></div>
-      <div class="framework-row"><span class="label">Financial Health & Growth</span><span class="pts">30 pts</span></div>
-      <div class="framework-row"><span class="label">Customer & Product Sentiment</span><span class="pts">25 pts</span></div>
-      <div class="framework-row"><span class="label">Community & Employee Sentiment</span><span class="pts">20 pts</span></div>
-      <div class="framework-unscored">+ Press tenor, competitive position, channel presence, and interview questions — unscored context for interview prep.</div>
+      <h3 id="framework-title">Scoring Framework</h3>
+      <div id="framework-rows"></div>
+      <div class="framework-unscored">
+        + Press tenor, competitive position, ecosystem snapshot, and interview question generator — unscored context for interview prep.
+      </div>
     </div>
   </aside>
 
+  <!-- RIGHT PANEL -->
   <main class="right-panel">
+
+    <!-- Empty State -->
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">📊</div>
       <h3>No report yet</h3>
-      <p>Enter a company name and run an analysis. Results appear progressively as each section completes.</p>
+      <p>Enter a company name on the left and run an analysis. Reports take 20–40 seconds as Claude searches across multiple sources.</p>
     </div>
 
+    <!-- Error Banner -->
     <div class="error-banner" id="error-banner"></div>
 
-    <!-- Progress bar -->
-    <div class="progress-bar-wrap" id="progress-wrap">
-      <div class="progress-label">
-        <span class="current-step" id="progress-label">Starting analysis...</span>
-        <span id="progress-pct">0%</span>
+    <!-- Loading State -->
+    <div class="loading-state" id="loading-state">
+      <div class="loading-header">
+        <div class="loading-spinner"></div>
+        <h3 id="loading-company-name">Researching company...</h3>
       </div>
-      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="loading-steps" id="loading-steps"></div>
     </div>
 
-    <!-- Report header (company name + actions) -->
-    <div class="report-header" id="report-header">
-      <div class="report-toolbar">
+    <!-- My Reports View -->
+    <div class="reports-view" id="reports-view">
+      <div class="reports-header">
         <div>
+          <h2>My Reports</h2>
+          <p>Saved analyses, ready to revisit. Stored locally in your browser.</p>
+        </div>
+        <div class="reports-actions">
+          <button class="compare-btn" id="compare-toggle-btn" onclick="toggleCompareMode()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="11" rx="1"/></svg>
+            Compare
+          </button>
+          <div class="storage-meter" id="storage-meter">
+            <div class="storage-meter-row">
+              <span><span id="storage-count">0</span> saved</span>
+              <span class="storage-pct" id="storage-pct">0 KB · 0%</span>
+            </div>
+            <div class="storage-meter-bar"><div class="storage-meter-fill" id="storage-meter-fill" style="width:0%"></div></div>
+            <div class="storage-meter-warning" id="storage-warning" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+      <div class="compare-banner" id="compare-banner" style="display:none">
+        <div class="compare-banner-text" id="compare-banner-text">Select 2–3 reports to compare side-by-side.</div>
+        <div class="compare-banner-actions">
+          <button class="compare-btn cancel" onclick="exitCompareMode()">Cancel</button>
+          <button class="compare-btn primary" id="compare-run-btn" onclick="runComparison()" disabled>
+            Compare Selected
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="reports-grid-container"></div>
+    </div>
+
+    <!-- Comparison View -->
+    <div class="comparison-view" id="comparison-view">
+      <div class="comparison-header">
+        <div>
+          <h2>Side-by-side comparison</h2>
+          <p id="comparison-subtitle">Companies compared on every scoring dimension. Best-in-row marked.</p>
+        </div>
+        <div class="report-actions">
+          <button class="action-btn" onclick="backToReports()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to My Reports
+          </button>
+        </div>
+      </div>
+      <div id="comparison-content"></div>
+    </div>
+
+    <!-- Report Output -->
+    <div class="report" id="report-output">
+      <div class="report-toolbar">
+        <div class="report-meta">
           <div class="report-company" id="report-company-title"></div>
           <div class="report-role" id="report-role-title"></div>
         </div>
         <div class="report-actions">
+          <button class="action-btn" id="back-to-reports-btn" style="display:none" onclick="switchView('reports')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Reports
+          </button>
+          <button class="action-btn" id="new-analysis-btn" style="display:none" onclick="startNewAnalysis()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Run New Analysis
+          </button>
           <button class="action-btn" id="copy-btn" onclick="copyReport()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copy
@@ -261,193 +1408,447 @@
           </button>
         </div>
       </div>
-      <!-- Score banner renders here -->
-      <div id="score-banner-slot"></div>
+
+      <div id="report-body"></div>
     </div>
 
-    <!-- Sections render here progressively -->
-    <div class="sections-container" id="sections-container"></div>
-
-    <footer id="page-footer">
+    <footer id="page-footer" style="display:none">
       <em>Market Viability Score</em> — Research sourced live via web search. Always verify key findings independently before making career decisions.
     </footer>
+
   </main>
 </div>
 
-<script>
-let reportData = { company: '', role: '', sections: [], generatedAt: '' };
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-check">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </span>
+  <span id="toast-message">Report saved</span>
+</div>
 
-const STEPS = [
-  { label: 'Scoring analyst recognition, financial health & sentiment...', pct: 10 },
-  { label: 'Analyzing press, competitive position & key signals...', pct: 40 },
-  { label: 'Scanning vendor partner page and reseller sites...', pct: 65 },
-  { label: 'Generating interview questions...', pct: 88 },
+<script>
+// Role metadata mirrors api/role-templates.js (UI-relevant subset only).
+// Source of truth for the prompt-shaping fields lives server-side; keep the
+// labels, weights, and loading-steps here in sync if the server template changes.
+const ROLE_META = {
+  sales: {
+    label: 'Sales / Channel',
+    tagline: 'Reseller ecosystem, channel motion, sales org reputation',
+    weights: { analyst: 25, financial: 30, product: 25, culture: 20 },
+    sectionLabels: {
+      analyst: 'Gartner / Analyst Recognition',
+      financial: 'Financial Health & Growth',
+      product: 'Customer & Product Sentiment',
+      culture: 'Sales Org & Employee Culture'
+    },
+    loadingSteps: [
+      'Searching Gartner, Forrester, and analyst sources',
+      'Pulling funding, valuation, and headcount data',
+      'Reading G2 and Gartner Peer Insights reviews',
+      'Scanning Glassdoor, Blind, and RepVue for sales-org signals',
+      'Mapping channel partners and reseller ecosystem',
+      'Compiling report and generating interview questions'
+    ]
+  },
+  engineering: {
+    label: 'Engineering',
+    tagline: 'Tech stack, dev reputation, engineering culture, build-vs-buy',
+    weights: { analyst: 20, financial: 25, product: 25, culture: 30 },
+    sectionLabels: {
+      analyst: 'Technical Analyst & Developer Reputation',
+      financial: 'Financial Health & Engineering Investment',
+      product: 'Product Quality & Developer Sentiment',
+      culture: 'Engineering Culture & Employee Reviews'
+    },
+    loadingSteps: [
+      'Scanning eng blog, conference talks, and analyst coverage',
+      'Pulling funding, layoffs, and R&D headcount trajectory',
+      'Reading developer reviews on G2, Stack Overflow, Hacker News',
+      'Filtering Glassdoor and Blind for engineering-specific signals',
+      'Mapping GitHub activity, integrations, and tech partnerships',
+      'Compiling report and generating interview questions'
+    ]
+  },
+  marketing: {
+    label: 'Marketing',
+    tagline: 'Brand presence, campaign sophistication, content quality, positioning',
+    weights: { analyst: 25, financial: 25, product: 25, culture: 25 },
+    sectionLabels: {
+      analyst: 'Brand Recognition & Analyst Coverage',
+      financial: 'Financial Health & Marketing Investment',
+      product: 'Brand Sentiment & Customer Perception',
+      culture: 'Marketing Org & Employee Culture'
+    },
+    loadingSteps: [
+      'Reading analyst coverage and category-positioning signals',
+      'Pulling funding, marketing spend, and headcount data',
+      'Assessing brand sentiment and customer story quality',
+      'Filtering Glassdoor and Blind for marketing-org signals',
+      'Mapping agency partnerships and martech stack',
+      'Compiling report and generating interview questions'
+    ]
+  },
+  finance: {
+    label: 'Finance / Operations',
+    tagline: 'Financial depth, operational maturity, audit history, leadership stability',
+    weights: { analyst: 15, financial: 40, product: 20, culture: 25 },
+    sectionLabels: {
+      analyst: 'Industry Recognition & Analyst Coverage',
+      financial: 'Financial Health, Audit & Operational Maturity',
+      product: 'Customer & Product Stability',
+      culture: 'Leadership Stability & Employee Culture'
+    },
+    loadingSteps: [
+      'Scanning industry recognition and governance coverage',
+      'Pulling funding, audit history, and regulatory filings',
+      'Assessing customer concentration and revenue stability',
+      'Filtering Glassdoor and Blind for G&A leadership signals',
+      'Mapping auditor, ERP, and compliance ecosystem',
+      'Compiling report and generating interview questions'
+    ]
+  },
+  product: {
+    label: 'Product',
+    tagline: 'Product reviews, PLG signals, PM culture, roadmap transparency',
+    weights: { analyst: 20, financial: 25, product: 35, culture: 20 },
+    sectionLabels: {
+      analyst: 'Industry & Analyst Recognition',
+      financial: 'Financial Health & Growth',
+      product: 'Product Reviews & User Sentiment',
+      culture: 'Product Org Culture & Employee Reviews'
+    },
+    loadingSteps: [
+      'Scanning analyst coverage and product positioning',
+      'Pulling funding, growth rate, and headcount trajectory',
+      'Reading G2, Product Hunt, and app-store reviews in depth',
+      'Filtering Glassdoor and Blind for PM-org signals',
+      'Mapping integrations, marketplace, and user community',
+      'Compiling report and generating interview questions'
+    ]
+  },
+  general: {
+    label: 'General',
+    tagline: 'Balanced view across all categories — good default for cross-functional roles',
+    weights: { analyst: 25, financial: 30, product: 25, culture: 20 },
+    sectionLabels: {
+      analyst: 'Industry Recognition & Analyst Coverage',
+      financial: 'Financial Health & Growth',
+      product: 'Customer & Product Sentiment',
+      culture: 'Community & Employee Sentiment'
+    },
+    loadingSteps: [
+      'Searching analyst, press, and industry recognition sources',
+      'Pulling funding, valuation, and headcount data',
+      'Reading G2, Gartner Peer Insights, and customer reviews',
+      'Scanning Glassdoor, Blind, and culture signals',
+      'Mapping partner and integration ecosystem',
+      'Compiling report and generating interview questions'
+    ]
+  }
+};
+
+const ROLE_ORDER = ['sales', 'engineering', 'marketing', 'finance', 'product', 'general'];
+const DEFAULT_ROLE = 'sales';
+
+let currentReport = { id: '', company: '', roleCategory: '', roleLabel: '', jobTitle: '', industry: '', markdown: '', generatedAt: '', overallScore: null, verdict: '', sectionScores: {} };
+let stepInterval = null;
+let activeView = 'analysis'; // 'analysis' | 'reports' | 'comparison'
+let viewingSavedReportId = null;
+let compareMode = false;
+let selectedForCompare = new Set();
+const COMPARE_MAX = 3;
+const COMPARE_MIN = 2;
+const CANONICAL_SECTION_LABELS = [
+  'Analyst Recognition',
+  'Financial Health',
+  'Customer/Product Sentiment',
+  'Employee/Culture Sentiment'
 ];
 
-function setProgress(stepIndex, pct) {
-  document.getElementById('progress-label').textContent = STEPS[stepIndex].label;
-  document.getElementById('progress-pct').textContent = `${pct}%`;
-  document.getElementById('progress-fill').style.width = `${pct}%`;
+/* ──────────────────────────────────────────────────────────────
+   ReportStore — storage abstraction layer
+   Replace the implementation below to swap localStorage for a
+   backend API. The public surface (save/list/get/delete/
+   getStorageInfo) is the contract callers depend on.
+   ────────────────────────────────────────────────────────────── */
+const ReportStore = (() => {
+  const STORAGE_KEY = 'mvs_reports_v1';
+  const STORAGE_LIMIT_BYTES = 5 * 1024 * 1024; // ~5MB localStorage cap
+
+  function readAll() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function writeAll(reports) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+  }
+
+  function genId() {
+    return 'rep_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+  }
+
+  function bytesUsed() {
+    const raw = localStorage.getItem(STORAGE_KEY) || '';
+    return new Blob([raw]).size;
+  }
+
+  function normKey(company, roleCategory) {
+    return (company || '').trim().toLowerCase() + '::' + (roleCategory || '');
+  }
+
+  return {
+    save(report) {
+      const reports = readAll();
+      const now = Date.now();
+      const matchKey = normKey(report.company, report.roleCategory);
+      const idx = reports.findIndex(r => normKey(r.company, r.roleCategory) === matchKey);
+
+      if (idx >= 0) {
+        const existing = reports[idx];
+        const updated = {
+          ...existing,
+          ...report,
+          id: existing.id,
+          createdAt: existing.createdAt,
+          updatedAt: now,
+        };
+        reports[idx] = updated;
+        writeAll(reports);
+        return { id: updated.id, updated: true };
+      }
+
+      const created = {
+        ...report,
+        id: genId(),
+        createdAt: now,
+        updatedAt: now,
+      };
+      reports.push(created);
+      writeAll(reports);
+      return { id: created.id, updated: false };
+    },
+
+    list() {
+      return readAll().slice().sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+    },
+
+    get(id) {
+      return readAll().find(r => r.id === id) || null;
+    },
+
+    delete(id) {
+      const reports = readAll();
+      const filtered = reports.filter(r => r.id !== id);
+      if (filtered.length === reports.length) return false;
+      writeAll(filtered);
+      return true;
+    },
+
+    getStorageInfo() {
+      const used = bytesUsed();
+      const count = readAll().length;
+      return {
+        bytes: used,
+        limit: STORAGE_LIMIT_BYTES,
+        percent: Math.min(100, (used / STORAGE_LIMIT_BYTES) * 100),
+        count,
+      };
+    },
+  };
+})();
+
+function extractOverall(md) {
+  const m = md.match(/Overall Score:\s*(\d+)\s*\/\s*100\s*[—-]\s*([^\n*]+)/i);
+  if (!m) return { score: null, verdict: '' };
+  return { score: parseInt(m[1], 10), verdict: m[2].trim().replace(/\*+/g, '') };
 }
 
-function showSkeletonSection(icon, title) {
-  const id = `section-${title.replace(/\s+/g, '-').toLowerCase()}`;
-  const el = document.createElement('div');
-  el.className = 'report-section loading-section';
-  el.id = id;
-  el.innerHTML = `
-    <div class="section-header">
-      <div class="section-title">${icon} ${title}</div>
-    </div>
-    <div class="section-body">
-      <div class="skeleton-lines">
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line medium"></div>
-        <div class="skeleton-line short"></div>
-      </div>
-    </div>`;
-  document.getElementById('sections-container').appendChild(el);
-  return id;
+function extractSectionScores(md) {
+  const scores = {};
+  const re = /###\s+([^\n]+?)\s*—\s*(\d+)\s*\/\s*(\d+)/g;
+  let m;
+  while ((m = re.exec(md)) !== null) {
+    const title = m[1].replace(/\*+/g, '').trim();
+    if (/overall score/i.test(title)) continue;
+    scores[title] = { score: parseInt(m[2], 10), max: parseInt(m[3], 10) };
+  }
+  return scores;
 }
 
-function replaceSection(id, html) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.innerHTML = html;
-  el.classList.remove('loading-section');
-  requestAnimationFrame(() => el.classList.add('visible'));
+function scoreClass(score) {
+  if (score == null) return 's-none';
+  if (score >= 85) return 's-strong';
+  if (score >= 70) return 's-promising';
+  if (score >= 50) return 's-caution';
+  return 's-risk';
 }
 
-async function callStep(step, company, role, industry, context = '') {
-  const res = await fetch('/api/analyze', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ company, role, industry, step, context })
+function formatBytes(bytes) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-message').textContent = message;
+  toast.classList.add('active');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('active'), 2400);
+}
+
+function getSelectedRoleId() {
+  const sel = document.getElementById('role-category-select');
+  return (sel && sel.value && ROLE_META[sel.value]) ? sel.value : DEFAULT_ROLE;
+}
+
+function renderRoleSelector() {
+  const sel = document.getElementById('role-category-select');
+  sel.innerHTML = '';
+  ROLE_ORDER.forEach(id => {
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = ROLE_META[id].label;
+    sel.appendChild(opt);
   });
-  const data = await res.json();
-  if (data.error) throw new Error(data.error);
-  return data.result;
+  sel.value = DEFAULT_ROLE;
+}
+
+function renderFrameworkAndTagline() {
+  const role = ROLE_META[getSelectedRoleId()];
+  document.getElementById('role-tagline').textContent = role.tagline;
+
+  const rows = document.getElementById('framework-rows');
+  const order = ['analyst', 'financial', 'product', 'culture'];
+  rows.innerHTML = order.map(k => `
+    <div class="framework-row">
+      <span class="label">${role.sectionLabels[k]}</span>
+      <span class="pts">${role.weights[k]} pts</span>
+    </div>
+  `).join('');
+}
+
+function renderLoadingSteps() {
+  const role = ROLE_META[getSelectedRoleId()];
+  const container = document.getElementById('loading-steps');
+  container.innerHTML = role.loadingSteps.map((text, i) => `
+    <div class="loading-step${i === 0 ? ' active' : ''}" data-step="${i + 1}">
+      <div class="step-dot"></div> ${text}
+    </div>
+  `).join('');
 }
 
 async function runAnalysis() {
   const company = document.getElementById('company-input').value.trim();
-  const role = document.getElementById('role-input').value.trim();
+  const roleCategory = getSelectedRoleId();
+  const jobTitle = document.getElementById('job-title-input').value.trim();
   const industry = document.getElementById('industry-input').value.trim();
-  if (!company) { document.getElementById('company-input').focus(); return; }
 
-  // Reset
+  if (!company) {
+    document.getElementById('company-input').focus();
+    return;
+  }
+
+  // Force the analysis view (user may have run this from the My Reports tab)
+  activeView = 'analysis';
+  document.getElementById('tab-analysis').classList.add('active');
+  document.getElementById('tab-reports').classList.remove('active');
+  document.getElementById('reports-view').classList.remove('active');
+  document.getElementById('comparison-view').classList.remove('active');
+  document.getElementById('back-to-reports-btn').style.display = 'none';
+  document.getElementById('new-analysis-btn').style.display = 'none';
+  viewingSavedReportId = null;
+  if (compareMode) {
+    compareMode = false;
+    selectedForCompare.clear();
+    document.getElementById('compare-banner').style.display = 'none';
+    document.getElementById('compare-toggle-btn').style.display = 'inline-flex';
+  }
+
+  // Build the loading panel for this role and reset UI
+  renderLoadingSteps();
   document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('report-output').classList.remove('active');
   document.getElementById('error-banner').classList.remove('active');
-  document.getElementById('report-header').classList.remove('active');
-  document.getElementById('sections-container').innerHTML = '';
-  document.getElementById('score-banner-slot').innerHTML = '';
-  document.getElementById('page-footer').classList.remove('active');
-  document.getElementById('progress-wrap').classList.add('active');
+  document.getElementById('page-footer').style.display = 'none';
+  document.getElementById('loading-state').classList.add('active');
+  document.getElementById('loading-company-name').textContent = `Researching ${company}...`;
   document.getElementById('run-btn').disabled = true;
 
-  reportData = { company, role: role || 'General Evaluation', sections: [], generatedAt: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) };
+  const stepEls = Array.from(document.querySelectorAll('#loading-steps .loading-step'));
 
-  // Show report header immediately
-  document.getElementById('report-company-title').textContent = company;
-  document.getElementById('report-role-title').textContent = `${reportData.role} · Generated ${reportData.generatedAt}`;
-  document.getElementById('report-header').classList.add('active');
+  // Animate loading steps
+  let currentStep = 1;
+  stepInterval = setInterval(() => {
+    if (currentStep <= stepEls.length) {
+      const el = stepEls[currentStep - 1];
+      if (el) { el.classList.remove('active'); el.classList.add('done'); }
+      currentStep++;
+      const next = stepEls[currentStep - 1];
+      if (next) next.classList.add('active');
+    }
+  }, 5000);
 
   try {
-    // ── STEP 1: Scored categories ──
-    setProgress(0, 10);
-    const s1ids = [
-      showSkeletonSection('📊', 'Gartner / Analyst Recognition'),
-      showSkeletonSection('💰', 'Financial Health & Growth'),
-      showSkeletonSection('⭐', 'Customer & Product Sentiment'),
-      showSkeletonSection('👥', 'Community & Employee Sentiment'),
-    ];
-
-    const step1 = await callStep(1, company, role, industry);
-    reportData.sections.push({ step: 1, text: step1 });
-    setProgress(0, 38);
-
-    // Render score banner
-    const scoreMatch = step1.match(/Overall Score:\s*(\d+)\s*\/\s*100\s*[—-]\s*(.+)/i);
-    if (scoreMatch) {
-      const score = parseInt(scoreMatch[1]);
-      const verdict = scoreMatch[2].trim().replace(/\*+/g, '');
-      let vClass = 'verdict-strong', color = '#10b981';
-      if (score < 85 && score >= 70) { vClass = 'verdict-promising'; color = '#d97706'; }
-      else if (score < 70 && score >= 50) { vClass = 'verdict-caution'; color = '#ea580c'; }
-      else if (score < 50) { vClass = 'verdict-risk'; color = '#dc2626'; }
-      document.getElementById('score-banner-slot').innerHTML = `
-        <div class="score-banner visible" style="margin-top:0">
-          <div><div class="score-label">Overall Score</div>
-          <div class="score-number" style="color:${color}">${score}<span class="denom"> / 100</span></div></div>
-          <div class="score-verdict ${vClass}">${getVerdictEmoji(verdict)} ${verdict}</div>
-        </div>`;
-    }
-
-    // Render category sections from step 1
-    const catSections = parseStep1Sections(step1);
-    const catDefs = [
-      { key: 'gartner', icon: '📊', title: 'Gartner / Analyst Recognition' },
-      { key: 'financial', icon: '💰', title: 'Financial Health & Growth' },
-      { key: 'customer', icon: '⭐', title: 'Customer & Product Sentiment' },
-      { key: 'community', icon: '👥', title: 'Community & Employee Sentiment' },
-    ];
-    catDefs.forEach((def, i) => {
-      const content = catSections[def.key] || '';
-      const scoreMatch = content.match(/—\s*(\d+)\/(\d+)/);
-      const title = def.title;
-      const scoreHTML = scoreMatch ? `<div class="section-score">${scoreMatch[1]} / ${scoreMatch[2]}</div>` : '';
-      const bodyText = content.replace(/###.*\n/, '').replace(/—\s*\d+\/\d+/, '').trim();
-      replaceSection(s1ids[i], `
-        <div class="section-header">
-          <div class="section-title">${def.icon} ${title}</div>
-          ${scoreHTML}
-        </div>
-        <div class="section-body">${formatText(bodyText)}</div>`);
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ company, roleCategory, jobTitle, industry })
     });
 
-    // ── STEP 2: Context layers ──
-    setProgress(1, 40);
-    const s2ids = [
-      showSkeletonSection('🗞️', 'Recent Press Tenor'),
-      showSkeletonSection('🚦', `Key Signals for a ${role || 'Tech Sales Role'}`),
-      showSkeletonSection('⚔️', 'Competitive Position'),
-    ];
+    clearInterval(stepInterval);
+    stepEls.forEach(el => { el.classList.remove('active'); el.classList.add('done'); });
 
-    const step2 = await callStep(2, company, role, industry, step1);
-    reportData.sections.push({ step: 2, text: step2 });
-    setProgress(1, 63);
+    if (!response.ok) throw new Error(`API error ${response.status}`);
+    const data = await response.json();
+    if (data.error) throw new Error(data.error);
 
-    // Render step 2 sections
-    renderPressTenor(s2ids[0], step2);
-    renderKeySignals(s2ids[1], step2, role);
-    renderCompetitive(s2ids[2], step2);
+    const textContent = data.result;
+    const roleLabel = data.roleLabel || ROLE_META[roleCategory].label;
+    const overall = extractOverall(textContent);
+    const sectionScores = extractSectionScores(textContent);
 
-    // ── STEP 3: Channel presence ──
-    setProgress(2, 65);
-    const s3id = showSkeletonSection('🤝', 'Channel Presence Snapshot');
+    currentReport = {
+      id: '',
+      company,
+      roleCategory,
+      roleLabel,
+      jobTitle,
+      industry,
+      markdown: textContent,
+      generatedAt: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      overallScore: overall.score,
+      verdict: overall.verdict,
+      sectionScores,
+    };
 
-    const step3 = await callStep(3, company, role, industry);
-    reportData.sections.push({ step: 3, text: step3 });
-    setProgress(2, 86);
-    renderChannelPresence(s3id, step3);
+    // Auto-save (or update if same company + role exists)
+    try {
+      const result = ReportStore.save(currentReport);
+      currentReport.id = result.id;
+      viewingSavedReportId = null; // this is a fresh live report
+      refreshReportsBadge();
+      showToast(result.updated ? 'Report updated' : 'Report saved');
+    } catch (e) {
+      // Storage failure (quota exceeded etc.) — surface but keep the report viewable
+      const errEl = document.getElementById('error-banner');
+      errEl.textContent = `Couldn't save report locally: ${e.message}. The report is still visible below.`;
+      errEl.classList.add('active');
+    }
 
-    // ── STEP 4: Interview questions ──
-    setProgress(3, 88);
-    const s4id = showSkeletonSection('🎯', 'Interview Questions');
-    const contextSummary = `${step1}\n\n${step2}\n\n${step3}`;
-    const step4 = await callStep(4, company, role, industry, contextSummary);
-    reportData.sections.push({ step: 4, text: step4 });
-    renderInterviewQuestions(s4id, step4);
-
-    // Done
-    setProgress(3, 100);
-    setTimeout(() => {
-      document.getElementById('progress-wrap').classList.remove('active');
-      document.getElementById('page-footer').classList.add('active');
-    }, 800);
+    renderReport(currentReport);
 
   } catch (err) {
-    document.getElementById('progress-wrap').classList.remove('active');
+    clearInterval(stepInterval);
+    document.getElementById('loading-state').classList.remove('active');
+    document.getElementById('empty-state').style.display = 'flex';
     const errEl = document.getElementById('error-banner');
     errEl.textContent = `Something went wrong: ${err.message}. Please try again.`;
     errEl.classList.add('active');
@@ -456,151 +1857,239 @@ async function runAnalysis() {
   }
 }
 
-// ── PARSERS ──
+function renderReport(r) {
+  document.getElementById('loading-state').classList.remove('active');
+  document.getElementById('report-company-title').textContent = r.company;
+  const subtitle = r.jobTitle ? `${r.roleLabel} · ${r.jobTitle}` : r.roleLabel;
+  document.getElementById('report-role-title').textContent = `${subtitle} · Generated ${r.generatedAt}`;
 
-function parseStep1Sections(text) {
-  const result = {};
-  const patterns = [
-    { key: 'gartner', regex: /### Gartner[^\n]*([\s\S]*?)(?=### Financial|### Customer|### Community|### Overall|$)/i },
-    { key: 'financial', regex: /### Financial[^\n]*([\s\S]*?)(?=### Customer|### Community|### Overall|$)/i },
-    { key: 'customer', regex: /### Customer[^\n]*([\s\S]*?)(?=### Community|### Overall|$)/i },
-    { key: 'community', regex: /### Community[^\n]*([\s\S]*?)(?=### Overall|$)/i },
-  ];
-  patterns.forEach(p => {
-    const m = text.match(p.regex);
-    if (m) result[p.key] = (m[0] || '').trim();
-  });
-  return result;
+  const body = document.getElementById('report-body');
+  body.innerHTML = renderMarkdownToHTML(r.markdown);
+
+  document.getElementById('report-output').classList.add('active');
+  document.getElementById('page-footer').style.display = 'block';
 }
 
-function renderPressTenor(id, text) {
-  const match = text.match(/### Recent Press Tenor\n([^\n]+)/i);
-  const line = match ? match[1].trim() : '';
-  const isGreen = line.includes('🟢');
-  const isRed = line.includes('🔴');
-  const badgeClass = isGreen ? 'tenor-green' : isRed ? 'tenor-red' : 'tenor-yellow';
-  const label = isGreen ? '🟢 Positive' : isRed ? '🔴 Negative' : '🟡 Mixed';
-  const summary = line.replace(/[🟢🟡🔴]\s*(Positive|Mixed|Negative)\s*[—-]?\s*/i, '').trim();
-  replaceSection(id, `
-    <div class="section-header"><div class="section-title">🗞️ Recent Press Tenor</div></div>
-    <div class="section-body">
-      <div class="tenor-badge ${badgeClass}">${label}</div>
-      <div>${formatText(summary)}</div>
-    </div>`);
-}
-
-function renderKeySignals(id, text, role) {
-  const match = text.match(/### Key Signals[^\n]*([\s\S]*?)(?=###|$)/i);
-  const content = match ? match[0] : '';
-  const title = role ? `Key Signals for a ${role}` : 'Key Signals';
-  replaceSection(id, `
-    <div class="section-header"><div class="section-title">🚦 ${title}</div></div>
-    <div class="section-body">${renderTable(content)}</div>`);
-}
-
-function renderCompetitive(id, text) {
-  const match = text.match(/### Competitive Position([\s\S]*?)(?=###|$)/i);
-  const content = match ? match[1].trim() : '';
-  replaceSection(id, `
-    <div class="section-header"><div class="section-title">⚔️ Competitive Position</div></div>
-    <div class="section-body">${formatText(content)}</div>`);
-}
-
-function renderChannelPresence(id, text) {
-  const match = text.match(/### Channel Presence[^\n]*([\s\S]*?)(?=###|$)/i);
-  const content = match ? match[1].trim() : text.trim();
-  const tableLines = content.split('\n').filter(l => l.includes('|') && !l.match(/^[\s|:-]+$/));
-  const nonTable = content.split('\n').filter(l => !l.includes('|')).join('\n').trim();
+function renderMarkdownToHTML(md) {
   let html = '';
-  if (tableLines.length >= 2) {
-    const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
-    const rows = tableLines.slice(1);
-    html += `<table class="report-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
-    rows.forEach(row => {
-      const cells = row.split('|').map(c => c.trim()).filter(Boolean);
-      if (cells.length) html += `<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
-    });
-    html += `</tbody></table>`;
+  const lines = md.split('\n');
+  let i = 0;
+
+  // Extract score for banner
+  const scoreMatch = md.match(/Overall Score:\s*(\d+)\s*\/\s*100\s*[—-]\s*(.+)/i);
+  if (scoreMatch) {
+    const score = parseInt(scoreMatch[1]);
+    const verdict = scoreMatch[2].trim().replace(/\*+/g, '');
+    let verdictClass = 'verdict-strong';
+    if (score < 85 && score >= 70) verdictClass = 'verdict-promising';
+    else if (score < 70 && score >= 50) verdictClass = 'verdict-caution';
+    else if (score < 50) verdictClass = 'verdict-risk';
+
+    let scoreColor = '#10b981';
+    if (score < 85 && score >= 70) scoreColor = '#d97706';
+    else if (score < 70 && score >= 50) scoreColor = '#ea580c';
+    else if (score < 50) scoreColor = '#dc2626';
+
+    html += `<div class="score-banner">
+      <div class="score-left">
+        <div class="score-label">Overall Score</div>
+        <div class="score-number" style="color:${scoreColor}">${score}<span class="denom"> / 100</span></div>
+      </div>
+      <div class="score-verdict ${verdictClass}">${getVerdictEmoji(verdict)} ${verdict}</div>
+    </div>`;
   }
-  if (nonTable) html += `<div style="margin-top:12px;font-size:13.5px;color:var(--slate-600);font-style:italic">${formatText(nonTable)}</div>`;
-  replaceSection(id, `
-    <div class="section-header"><div class="section-title">🤝 Channel Presence Snapshot</div></div>
-    <div class="section-body">${html || formatText(text)}</div>`);
+
+  // Process remaining content into sections
+  const sections = md.split(/\n(?=###\s)/);
+  for (const section of sections) {
+    const titleMatch = section.match(/^###\s+(.+)/);
+    if (!titleMatch) continue;
+
+    const title = titleMatch[1].replace(/\*+/g, '').trim();
+    const content = section.replace(/^###\s+.+\n/, '').trim();
+
+    if (title.toLowerCase().includes('overall score')) continue;
+
+    // Score sections
+    const scored = title.match(/—\s*([\d]+)\/([\d]+)/);
+    const sectionTitle = title.replace(/—.*$/, '').trim();
+
+    let sectionHTML = `<div class="report-section">
+      <div class="section-header">
+        <div class="section-title">${getSectionIcon(sectionTitle)} ${sectionTitle}</div>
+        ${scored ? `<div class="section-score">${scored[1]} / ${scored[2]}</div>` : ''}
+      </div>
+      <div class="section-body">`;
+
+    if (title.toLowerCase().includes('press tenor')) {
+      sectionHTML += renderPressTenor(content);
+    } else if (title.toLowerCase().includes('key signals')) {
+      sectionHTML += renderTable(content);
+    } else if (title.toLowerCase().includes('channel presence')) {
+      sectionHTML += renderChannelPresence(content);
+    } else if (title.toLowerCase().includes('interview')) {
+      sectionHTML += renderInterviewQuestions(content);
+    } else {
+      sectionHTML += escapeAndFormat(content);
+    }
+
+    sectionHTML += `</div></div>`;
+    html += sectionHTML;
+  }
+
+  return html;
 }
 
-function renderInterviewQuestions(id, text) {
-  const askMatch = text.match(/\*\*Questions to Ask Them[:\*]*([\s\S]*?)(?=\*\*Questions to Prepare|\*\*Prepare|$)/i);
-  const prepMatch = text.match(/\*\*Questions to Prepare For[:\*]*([\s\S]*?)$/i);
+function renderPressTenor(content) {
+  const greenMatch = content.match(/🟢/);
+  const yellowMatch = content.match(/🟡/);
+  const redMatch = content.match(/🔴/);
+  let badgeClass = 'tenor-green', label = '🟢 Positive';
+  if (yellowMatch) { badgeClass = 'tenor-yellow'; label = '🟡 Mixed'; }
+  if (redMatch) { badgeClass = 'tenor-red'; label = '🔴 Negative'; }
 
-  function parseQs(block) {
-    if (!block) return '';
-    let html = '';
-    const items = block.trim().split(/\n(?=\d+\.)/);
-    items.forEach(item => {
-      if (!item.trim()) return;
-      const noteMatch = item.match(/\(Note:\s*([\s\S]*?)\)/i);
-      const note = noteMatch ? noteMatch[1].trim() : null;
-      const qText = item.replace(/^\d+\.\s*/, '').replace(/\(Note:[\s\S]*?\)/i, '').replace(/\*\*/g, '').trim();
-      if (!qText) return;
-      html += `<div class="question-block">
-        <div class="question-text">${escapeHtml(qText)}</div>
-        ${note ? `<div class="question-note">→ ${escapeHtml(note)}</div>` : ''}
-      </div>`;
-    });
-    return html;
-  }
-
-  const askHTML = parseQs(askMatch ? askMatch[1] : '');
-  const prepHTML = parseQs(prepMatch ? prepMatch[1] : '');
-
-  replaceSection(id, `
-    <div class="section-header"><div class="section-title">🎯 Interview Questions</div></div>
-    <div class="section-body">
-      ${askHTML ? `<div class="question-set-label" style="color:var(--amber)">💬 Questions to Ask Them</div>${askHTML}` : ''}
-      ${prepHTML ? `<div class="question-set-label" style="color:var(--slate-500);margin-top:20px">🎯 Questions to Prepare For</div>${prepHTML}` : ''}
-    </div>`);
+  const summary = content.replace(/[🟢🟡🔴]\s*(Positive|Mixed|Negative)\s*[—-]?\s*/i, '').trim();
+  return `<div class="tenor-badge ${badgeClass}">${label}</div><div>${escapeAndFormat(summary)}</div>`;
 }
 
 function renderTable(content) {
   const rows = content.split('\n').filter(l => l.includes('|') && !l.match(/^[\s|:-]+$/));
-  if (rows.length < 2) return formatText(content.replace(/###[^\n]*\n/, ''));
+  if (rows.length < 2) return escapeAndFormat(content);
+
   const headers = rows[0].split('|').map(h => h.trim()).filter(Boolean);
   const dataRows = rows.slice(1);
-  let html = `<table class="report-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+
+  let table = `<table class="report-table"><thead><tr>`;
+  headers.forEach(h => { table += `<th>${h}</th>`; });
+  table += `</tr></thead><tbody>`;
+
   dataRows.forEach(row => {
     const cells = row.split('|').map(c => c.trim()).filter(Boolean);
-    if (cells.length) html += `<tr>${cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
+    if (cells.length === 0) return;
+    table += `<tr>`;
+    cells.forEach(c => { table += `<td>${c}</td>`; });
+    table += `</tr>`;
   });
-  return html + `</tbody></table>`;
+
+  table += `</tbody></table>`;
+  const nonTable = content.split('\n').filter(l => !l.includes('|')).join('\n').trim();
+  if (nonTable) table += `<div style="margin-top:12px;font-size:13.5px;color:var(--slate-600)">${escapeAndFormat(nonTable)}</div>`;
+  return table;
 }
 
-function formatText(text) {
-  return escapeHtml(text)
+function renderChannelPresence(content) {
+  const tableLines = content.split('\n').filter(l => l.includes('|') && !l.match(/^[\s|:-]+$/));
+  const nonTableLines = content.split('\n').filter(l => !l.includes('|')).join('\n').trim();
+
+  let out = '';
+  if (tableLines.length >= 2) {
+    const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
+    const dataRows = tableLines.slice(1);
+    out += `<table class="report-table"><thead><tr>`;
+    headers.forEach(h => { out += `<th>${h}</th>`; });
+    out += `</tr></thead><tbody>`;
+    dataRows.forEach(row => {
+      const cells = row.split('|').map(c => c.trim()).filter(Boolean);
+      if (!cells.length) return;
+      out += `<tr>`;
+      cells.forEach(c => { out += `<td>${c}</td>`; });
+      out += `</tr>`;
+    });
+    out += `</tbody></table>`;
+  }
+
+  if (nonTableLines) {
+    out += `<div style="margin-top:12px;font-size:13.5px;color:var(--slate-600);font-style:italic">${escapeAndFormat(nonTableLines)}</div>`;
+  }
+  return out;
+}
+
+function renderInterviewQuestions(content) {
+  let out = '';
+  const sections = content.split(/\*\*Questions to (Ask Them|Prepare For)[:\*]*/i);
+
+  for (let i = 1; i < sections.length; i += 2) {
+    const label = sections[i];
+    const body = sections[i + 1] || '';
+    const isAsk = label.toLowerCase().includes('ask');
+
+    out += `<div style="margin-bottom:20px">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:${isAsk ? 'var(--amber)' : 'var(--slate-500)'};margin-bottom:12px">
+        ${isAsk ? '💬 Questions to Ask Them' : '🎯 Questions to Prepare For'}
+      </div>`;
+
+    // Parse question + note pairs
+    const items = body.trim().split(/\n(?=\d+\.|[-•]|\*\*[^*])/);
+    items.forEach(item => {
+      if (!item.trim()) return;
+      const noteMatch = item.match(/\(Note:\s*(.+?)\)/is) || item.match(/\*Note:\*\s*(.+)/i);
+      const note = noteMatch ? noteMatch[1].trim() : null;
+      const qText = item
+        .replace(/^\d+\.\s*/, '')
+        .replace(/^[-•]\s*/, '')
+        .replace(/\(Note:.*?\)/is, '')
+        .replace(/\*Note:\*.*/i, '')
+        .replace(/\*\*/g, '')
+        .trim();
+
+      if (!qText) return;
+      out += `<div class="question-block">
+        <div class="question-text">${qText}</div>
+        ${note ? `<div class="question-note">→ ${note}</div>` : ''}
+      </div>`;
+    });
+
+    out += `</div>`;
+  }
+
+  return out || escapeAndFormat(content);
+}
+
+function escapeAndFormat(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>');
 }
 
-function escapeHtml(text) {
-  return (text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function getSectionIcon(title) {
+  const t = title.toLowerCase();
+  // People-section keywords are checked first because role-specific labels
+  // like "Product Org Culture & Employee Reviews" also contain "product".
+  if (t.includes('employee') || t.includes('culture') || t.includes('community') || t.includes('leadership')) return '👥';
+  if (t.includes('gartner') || t.includes('analyst') || t.includes('recognition') || t.includes('brand')) return '📊';
+  if (t.includes('financial') || t.includes('health') || t.includes('audit')) return '💰';
+  if (t.includes('customer') || t.includes('product') || t.includes('user') || t.includes('sentiment') || t.includes('review')) return '⭐';
+  if (t.includes('press') || t.includes('tenor')) return '🗞️';
+  if (t.includes('signal')) return '🚦';
+  if (t.includes('competitive') || t.includes('position')) return '⚔️';
+  if (t.includes('channel') || t.includes('partner') || t.includes('integration') || t.includes('ecosystem')) return '🤝';
+  if (t.includes('interview')) return '🎯';
+  return '📋';
 }
 
-function getVerdictEmoji(v) {
-  if (!v) return '📊';
-  const vl = v.toLowerCase();
-  if (vl.includes('strong')) return '✅';
-  if (vl.includes('promising')) return '🟡';
-  if (vl.includes('caution')) return '⚠️';
-  if (vl.includes('risk')) return '🔴';
+function getVerdictEmoji(verdict) {
+  const v = verdict.toLowerCase();
+  if (v.includes('strong')) return '✅';
+  if (v.includes('promising')) return '🟡';
+  if (v.includes('caution')) return '⚠️';
+  if (v.includes('risk')) return '🔴';
   return '📊';
 }
 
+function reportHeaderText(r) {
+  const subtitle = r.jobTitle ? `${r.roleLabel} · ${r.jobTitle}` : r.roleLabel;
+  return `${r.company} — Market Viability Score\n${subtitle}\nGenerated ${r.generatedAt}`;
+}
+
 async function copyReport() {
-  const allText = reportData.sections.map(s => s.text).join('\n\n---\n\n');
-  const full = `${reportData.company} — Market Viability Score\n${reportData.role}\nGenerated ${reportData.generatedAt}\n\n${allText}`;
+  const r = getActiveReport();
+  if (!r || !r.markdown) return;
   try {
-    await navigator.clipboard.writeText(full);
+    await navigator.clipboard.writeText(`${reportHeaderText(r)}\n\n${r.markdown}`);
     const btn = document.getElementById('copy-btn');
     btn.classList.add('copied');
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
@@ -608,23 +2097,547 @@ async function copyReport() {
       btn.classList.remove('copied');
       btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
     }, 2500);
-  } catch(e) {}
+  } catch (e) {}
 }
 
 function downloadReport() {
-  const allText = reportData.sections.map(s => s.text).join('\n\n---\n\n');
-  const full = `${reportData.company} — Market Viability Score\n${reportData.role}\nGenerated ${reportData.generatedAt}\n\n${allText}`;
-  const blob = new Blob([full], { type: 'text/plain' });
+  const r = getActiveReport();
+  if (!r || !r.markdown) return;
+  const content = `${reportHeaderText(r)}\n\n${r.markdown}`;
+  const blob = new Blob([content], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${reportData.company.replace(/\s+/g, '_')}_Market_Viability_Score.txt`;
+  a.download = `${r.company.replace(/\s+/g, '_')}_Market_Viability_Score.txt`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
+/* ── VIEW SWITCHING ── */
+function switchView(name) {
+  activeView = name;
+
+  document.getElementById('tab-analysis').classList.toggle('active', name === 'analysis');
+  document.getElementById('tab-reports').classList.toggle('active', name === 'reports');
+
+  const reportsView = document.getElementById('reports-view');
+  const comparisonView = document.getElementById('comparison-view');
+  const emptyState = document.getElementById('empty-state');
+  const loadingState = document.getElementById('loading-state');
+  const reportOutput = document.getElementById('report-output');
+  const errorBanner = document.getElementById('error-banner');
+  const footer = document.getElementById('page-footer');
+
+  // Always hide the comparison overlay on a tab switch — it's reachable only from
+  // My Reports via the Compare button. Don't clear selectedForCompare here so
+  // backToReports() can re-enter compare mode with the prior selection intact.
+  comparisonView.classList.remove('active');
+
+  if (name === 'reports') {
+    reportsView.classList.add('active');
+    emptyState.style.display = 'none';
+    loadingState.classList.remove('active');
+    reportOutput.classList.remove('active');
+    errorBanner.classList.remove('active');
+    footer.style.display = 'none';
+    viewingSavedReportId = null;
+    renderReportsList();
+  } else {
+    reportsView.classList.remove('active');
+    viewingSavedReportId = null;
+    // Leaving My Reports entirely — drop compare-mode UI state
+    if (compareMode) {
+      compareMode = false;
+      selectedForCompare.clear();
+      document.getElementById('compare-banner').style.display = 'none';
+      document.getElementById('compare-toggle-btn').style.display = 'inline-flex';
+    }
+    document.getElementById('back-to-reports-btn').style.display = 'none';
+    document.getElementById('new-analysis-btn').style.display = 'none';
+
+    // Restore the analysis view: report if one exists, else empty state
+    if (currentReport.markdown) {
+      reportOutput.classList.add('active');
+      footer.style.display = 'block';
+      // Re-render to ensure content matches currentReport (in case we returned from a saved report view)
+      renderReport(currentReport);
+    } else {
+      emptyState.style.display = 'flex';
+    }
+  }
+}
+
+function refreshReportsBadge() {
+  const info = ReportStore.getStorageInfo();
+  document.getElementById('tab-reports-count').textContent = info.count;
+}
+
+function renderReportsList() {
+  const reports = ReportStore.list();
+  const info = ReportStore.getStorageInfo();
+  const container = document.getElementById('reports-grid-container');
+
+  // Storage meter
+  document.getElementById('storage-count').textContent = `${info.count} ${info.count === 1 ? 'report' : 'reports'}`;
+  document.getElementById('storage-pct').textContent = `${formatBytes(info.bytes)} · ${info.percent.toFixed(1)}%`;
+  const fill = document.getElementById('storage-meter-fill');
+  fill.style.width = `${Math.max(2, info.percent)}%`;
+  fill.classList.remove('warn', 'danger');
+  if (info.percent >= 90) fill.classList.add('danger');
+  else if (info.percent >= 75) fill.classList.add('warn');
+
+  const warnEl = document.getElementById('storage-warning');
+  if (info.percent >= 90) {
+    warnEl.style.display = 'block';
+    warnEl.textContent = 'Storage nearly full. Delete older reports to make room for new analyses.';
+  } else if (info.percent >= 75) {
+    warnEl.style.display = 'block';
+    warnEl.textContent = 'Storage is filling up. Consider deleting reports you no longer need.';
+  } else {
+    warnEl.style.display = 'none';
+  }
+
+  refreshReportsBadge();
+
+  if (reports.length === 0) {
+    container.innerHTML = `
+      <div class="empty-saved">
+        <div class="empty-icon">📁</div>
+        <h3>No saved reports yet</h3>
+        <p>Run an analysis on a company and it will be saved here automatically. Your reports stay on this device.</p>
+        <button onclick="switchView('analysis')">Run your first analysis</button>
+      </div>`;
+    return;
+  }
+
+  let html = '<div class="reports-grid">';
+  for (const r of reports) {
+    const sClass = scoreClass(r.overallScore);
+    const scoreText = r.overallScore != null ? r.overallScore : '—';
+    const sectionTags = Object.entries(r.sectionScores || {}).slice(0, 4).map(([title, s]) => {
+      // shorten the section title to first 1-2 words
+      const short = title.split(/[\s/&]+/).slice(0, 2).join(' ');
+      return `<span class="report-card-section" title="${escapeAttr(title)}">${escapeAttr(short)} ${s.score}/${s.max}</span>`;
+    }).join('');
+    const dateStr = new Date(r.updatedAt || r.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const subtitle = r.jobTitle ? `${escapeAttr(r.roleLabel)}<span class="role-sep">·</span>${escapeAttr(r.jobTitle)}` : escapeAttr(r.roleLabel);
+
+    const isSelected = selectedForCompare.has(r.id);
+    const atLimit = !isSelected && selectedForCompare.size >= COMPARE_MAX;
+    const cardClasses = [
+      'report-card',
+      compareMode ? 'selectable' : '',
+      isSelected ? 'selected' : '',
+      compareMode && atLimit ? 'disabled-select' : ''
+    ].filter(Boolean).join(' ');
+    const clickHandler = compareMode
+      ? `toggleCompareSelect('${escapeAttr(r.id)}')`
+      : `viewSavedReport('${escapeAttr(r.id)}')`;
+    const checkboxHTML = compareMode
+      ? `<span class="compare-checkbox" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></span>`
+      : '';
+
+    html += `
+      <div class="${cardClasses}" data-id="${escapeAttr(r.id)}" onclick="${clickHandler}" role="${compareMode ? 'checkbox' : 'button'}" aria-checked="${compareMode ? isSelected : ''}" tabindex="0">
+        ${checkboxHTML}
+        <div class="report-card-top">
+          <div class="report-card-company">${escapeAttr(r.company)}</div>
+          <div class="report-card-score ${sClass}">${scoreText}</div>
+        </div>
+        <div class="report-card-role">${subtitle}</div>
+        ${sectionTags ? `<div class="report-card-sections">${sectionTags}</div>` : ''}
+        <div class="report-card-footer">
+          <div class="report-card-date">${dateStr}</div>
+          ${compareMode ? '' : `<button class="report-card-delete" title="Delete report" aria-label="Delete report" onclick="event.stopPropagation(); deleteSavedReport('${escapeAttr(r.id)}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          </button>`}
+        </div>
+      </div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+
+  // Hide compare button if there are <2 reports — nothing to compare
+  const compareBtn = document.getElementById('compare-toggle-btn');
+  if (compareBtn) {
+    compareBtn.style.display = reports.length >= COMPARE_MIN ? 'inline-flex' : 'none';
+  }
+}
+
+function escapeAttr(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function viewSavedReport(id) {
+  const r = ReportStore.get(id);
+  if (!r) {
+    showToast('Report not found');
+    renderReportsList();
+    return;
+  }
+
+  // Don't overwrite the live currentReport — viewing a saved report is an
+  // overlay state. The active report is resolved by getActiveReport().
+  viewingSavedReportId = id;
+
+  document.getElementById('reports-view').classList.remove('active');
+  document.getElementById('comparison-view').classList.remove('active');
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('loading-state').classList.remove('active');
+  document.getElementById('error-banner').classList.remove('active');
+  document.getElementById('back-to-reports-btn').style.display = 'inline-flex';
+  document.getElementById('new-analysis-btn').style.display = 'inline-flex';
+
+  renderReport(r);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getActiveReport() {
+  if (viewingSavedReportId) {
+    return ReportStore.get(viewingSavedReportId) || currentReport;
+  }
+  return currentReport;
+}
+
+function startNewAnalysis() {
+  currentReport = { id: '', company: '', roleCategory: '', roleLabel: '', jobTitle: '', industry: '', markdown: '', generatedAt: '', overallScore: null, verdict: '', sectionScores: {} };
+  viewingSavedReportId = null;
+  switchView('analysis');
+  document.getElementById('company-input').focus();
+}
+
+function deleteSavedReport(id) {
+  const r = ReportStore.get(id);
+  if (!r) return;
+  if (!confirm(`Delete the saved report for "${r.company}"? This cannot be undone.`)) return;
+
+  ReportStore.delete(id);
+  if (currentReport.id === id) {
+    currentReport = { id: '', company: '', roleCategory: '', roleLabel: '', jobTitle: '', industry: '', markdown: '', generatedAt: '', overallScore: null, verdict: '', sectionScores: {} };
+  }
+  selectedForCompare.delete(id);
+  if (compareMode) {
+    // Drop out of compare mode if not enough reports remain to compare
+    if (ReportStore.list().length < COMPARE_MIN) {
+      exitCompareMode();
+    } else {
+      updateCompareBanner();
+    }
+  }
+  refreshReportsBadge();
+  renderReportsList();
+  showToast('Report deleted');
+}
+
+/* ── COMPARE MODE ── */
+function toggleCompareMode() {
+  const reports = ReportStore.list();
+  if (reports.length < COMPARE_MIN) {
+    showToast(`Save at least ${COMPARE_MIN} reports to compare`);
+    return;
+  }
+  compareMode = true;
+  selectedForCompare.clear();
+  document.getElementById('compare-banner').style.display = 'flex';
+  document.getElementById('compare-toggle-btn').style.display = 'none';
+  updateCompareBanner();
+  renderReportsList();
+}
+
+function exitCompareMode() {
+  compareMode = false;
+  selectedForCompare.clear();
+  document.getElementById('compare-banner').style.display = 'none';
+  document.getElementById('compare-toggle-btn').style.display = 'inline-flex';
+  renderReportsList();
+}
+
+function toggleCompareSelect(id) {
+  if (selectedForCompare.has(id)) {
+    selectedForCompare.delete(id);
+  } else {
+    if (selectedForCompare.size >= COMPARE_MAX) {
+      showToast(`You can compare up to ${COMPARE_MAX} reports at once`);
+      return;
+    }
+    selectedForCompare.add(id);
+  }
+  updateCompareBanner();
+  renderReportsList();
+}
+
+function updateCompareBanner() {
+  const n = selectedForCompare.size;
+  const text = document.getElementById('compare-banner-text');
+  const runBtn = document.getElementById('compare-run-btn');
+  if (n === 0) {
+    text.innerHTML = `Select <strong>${COMPARE_MIN}–${COMPARE_MAX}</strong> reports to compare side-by-side.`;
+  } else {
+    text.innerHTML = `<strong>${n}</strong> selected · pick ${n < COMPARE_MIN ? `${COMPARE_MIN - n} more to enable comparison` : (n < COMPARE_MAX ? `up to ${COMPARE_MAX - n} more, or compare now` : 'maximum reached')}`;
+  }
+  runBtn.disabled = n < COMPARE_MIN;
+}
+
+function runComparison() {
+  if (selectedForCompare.size < COMPARE_MIN) {
+    showToast(`Select at least ${COMPARE_MIN} reports to compare`);
+    return;
+  }
+  const ids = Array.from(selectedForCompare);
+  const reports = ids.map(id => ReportStore.get(id)).filter(Boolean);
+  if (reports.length < COMPARE_MIN) {
+    showToast('Some selected reports are missing');
+    exitCompareMode();
+    return;
+  }
+  showComparisonView(reports);
+}
+
+function showComparisonView(reports) {
+  activeView = 'comparison';
+
+  // Hide everything else, show comparison
+  document.getElementById('reports-view').classList.remove('active');
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('loading-state').classList.remove('active');
+  document.getElementById('report-output').classList.remove('active');
+  document.getElementById('error-banner').classList.remove('active');
+  document.getElementById('page-footer').style.display = 'none';
+  document.getElementById('comparison-view').classList.add('active');
+
+  // Tab state — keep "My Reports" highlighted since comparison is born from it
+  document.getElementById('tab-analysis').classList.remove('active');
+  document.getElementById('tab-reports').classList.add('active');
+
+  document.getElementById('comparison-subtitle').textContent =
+    `Comparing ${reports.length} ${reports.length === 1 ? 'report' : 'reports'} across analyst, financial, customer, and culture signals. Best-in-row marked.`;
+
+  document.getElementById('comparison-content').innerHTML = renderComparison(reports);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function backToReports() {
+  document.getElementById('comparison-view').classList.remove('active');
+  // Keep selection so the user can adjust and re-compare; but exit "compare mode" UI overlay
+  // (selection persists silently — user can re-enter compare mode to see / modify it)
+  switchView('reports');
+  // Re-enter compare mode if they had selections — keeps continuity
+  if (selectedForCompare.size > 0) {
+    compareMode = true;
+    document.getElementById('compare-banner').style.display = 'flex';
+    document.getElementById('compare-toggle-btn').style.display = 'none';
+    updateCompareBanner();
+    renderReportsList();
+  }
+}
+
+function getNormalizedSections(report) {
+  // Map the report's actual section scores (whose labels vary by role) to the
+  // 4 canonical comparison rows. Order in sectionScores matches role.weights
+  // order (analyst, financial, product, culture) per the markdown structure.
+  const entries = Object.entries(report.sectionScores || {}).slice(0, 4);
+  return CANONICAL_SECTION_LABELS.map((canonical, i) => {
+    const entry = entries[i];
+    if (!entry) return { canonical, actual: canonical, score: null, max: null, pct: null };
+    const [actual, s] = entry;
+    const score = s.score;
+    const max = s.max;
+    const pct = (typeof score === 'number' && typeof max === 'number' && max > 0) ? (score / max) * 100 : null;
+    return { canonical, actual, score, max, pct };
+  });
+}
+
+function pctScoreClass(pct) {
+  if (pct == null) return 's-none';
+  if (pct >= 80) return 's-strong';
+  if (pct >= 60) return 's-promising';
+  if (pct >= 40) return 's-caution';
+  return 's-risk';
+}
+
+function verdictClass(verdict) {
+  const v = (verdict || '').toLowerCase();
+  if (!v) return 'verdict-none';
+  if (v.includes('strong')) return 'verdict-strong';
+  if (v.includes('promising')) return 'verdict-promising';
+  if (v.includes('caution')) return 'verdict-caution';
+  if (v.includes('risk')) return 'verdict-risk';
+  return 'verdict-none';
+}
+
+function findBestIndex(values) {
+  // values: array of numbers or null. Returns index of max, or -1 if no valid max,
+  // or -1 if there's a tie at the top (no single winner to crown).
+  let best = -Infinity, bestIdx = -1, tie = false;
+  values.forEach((v, i) => {
+    if (v == null) return;
+    if (v > best) { best = v; bestIdx = i; tie = false; }
+    else if (v === best) { tie = true; }
+  });
+  return tie ? -1 : bestIdx;
+}
+
+function renderComparison(reports) {
+  const cols = reports;
+  const overall = cols.map(r => (typeof r.overallScore === 'number' ? r.overallScore : null));
+  const sectionsByCol = cols.map(getNormalizedSections);
+
+  // Per-section: pct values across columns
+  const sectionRows = CANONICAL_SECTION_LABELS.map((label, rowIdx) => {
+    const pcts = sectionsByCol.map(s => s[rowIdx].pct);
+    const bestIdx = findBestIndex(pcts);
+    return { label, rowIdx, bestIdx };
+  });
+
+  const overallBest = findBestIndex(overall);
+
+  // ─ Desktop table ─
+  let tableHTML = `<div class="comparison-table-wrap"><table class="comparison-table"><thead><tr>
+    <th class="row-label-head">Dimension</th>`;
+  cols.forEach((r, i) => {
+    const subtitle = r.jobTitle ? `${escapeAttr(r.roleLabel)} · ${escapeAttr(r.jobTitle)}` : escapeAttr(r.roleLabel);
+    tableHTML += `<th>
+      <div class="comparison-company-header">
+        <button class="comparison-company-name" onclick="viewSavedReport('${escapeAttr(r.id)}')" title="Open full report">${escapeAttr(r.company)}</button>
+        <div class="comparison-company-role">${subtitle}</div>
+      </div>
+    </th>`;
+  });
+  tableHTML += `</tr></thead><tbody>`;
+
+  // Overall score row
+  tableHTML += `<tr class="comparison-overall-row"><td class="row-label">Overall Score</td>`;
+  cols.forEach((r, i) => {
+    const score = overall[i];
+    const cls = scoreClass(score);
+    const isBest = i === overallBest;
+    const scoreHTML = score != null
+      ? `<span class="comparison-score ${cls}${isBest ? ' is-best' : ''}">${score}<span class="denom">/100</span></span>${isBest ? '<span class="winner-tag">Best</span>' : ''}`
+      : `<span class="comparison-score s-none">—</span>`;
+    tableHTML += `<td class="comparison-cell">${scoreHTML}</td>`;
+  });
+  tableHTML += `</tr>`;
+
+  // Verdict row
+  tableHTML += `<tr><td class="row-label">Verdict</td>`;
+  cols.forEach(r => {
+    const v = r.verdict || '';
+    const vCls = verdictClass(v);
+    const label = v ? escapeAttr(v) : '—';
+    tableHTML += `<td><span class="comparison-verdict ${vCls}">${label}</span></td>`;
+  });
+  tableHTML += `</tr>`;
+
+  // Section rows
+  sectionRows.forEach(({ label, rowIdx, bestIdx }) => {
+    tableHTML += `<tr><td class="row-label">${escapeAttr(label)}</td>`;
+    cols.forEach((r, i) => {
+      const sec = sectionsByCol[i][rowIdx];
+      if (sec.score == null) {
+        tableHTML += `<td><span class="comparison-score s-none">—</span></td>`;
+      } else {
+        const cls = pctScoreClass(sec.pct);
+        const isBest = i === bestIdx;
+        tableHTML += `<td class="comparison-cell">
+          <span class="comparison-score ${cls}${isBest ? ' is-best' : ''}" title="${escapeAttr(sec.actual)}">
+            ${sec.score}<span class="denom">/${sec.max}</span>
+          </span>${isBest ? '<span class="winner-tag">Best</span>' : ''}
+        </td>`;
+      }
+    });
+    tableHTML += `</tr>`;
+  });
+
+  // Quick Take row
+  tableHTML += `<tr class="quick-take-row"><td class="row-label">Quick Take</td>`;
+  cols.forEach(r => {
+    const take = r.verdict ? `${escapeAttr(r.verdict)}.` : '—';
+    tableHTML += `<td>${take}</td>`;
+  });
+  tableHTML += `</tr>`;
+
+  // Footer row — view full report links
+  tableHTML += `<tr class="comparison-footer-row"><td class="row-label"></td>`;
+  cols.forEach(r => {
+    tableHTML += `<td><button class="view-full-link" onclick="viewSavedReport('${escapeAttr(r.id)}')">
+      View Full Report
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button></td>`;
+  });
+  tableHTML += `</tr>`;
+
+  tableHTML += `</tbody></table></div>`;
+
+  // ─ Mobile: per-company stacked cards ─
+  let cardsHTML = `<div class="comparison-cards">`;
+  cols.forEach((r, i) => {
+    const subtitle = r.jobTitle ? `${escapeAttr(r.roleLabel)} · ${escapeAttr(r.jobTitle)}` : escapeAttr(r.roleLabel);
+    cardsHTML += `<div class="comparison-card">
+      <div class="comparison-card-header">
+        <button class="comparison-card-name" onclick="viewSavedReport('${escapeAttr(r.id)}')">${escapeAttr(r.company)}</button>
+        <div class="comparison-card-role">${subtitle}</div>
+      </div>
+      <div class="comparison-card-body">`;
+
+    // Overall
+    const score = overall[i];
+    const cls = scoreClass(score);
+    const isOverallBest = i === overallBest;
+    cardsHTML += `<div class="comparison-card-row">
+      <span class="row-label-mobile">Overall</span>
+      <span>
+        ${score != null
+          ? `<span class="comparison-score ${cls}${isOverallBest ? ' is-best' : ''}">${score}<span class="denom">/100</span></span>${isOverallBest ? '<span class="winner-tag">Best</span>' : ''}`
+          : `<span class="comparison-score s-none">—</span>`}
+      </span>
+    </div>`;
+
+    // Verdict
+    const vCls = verdictClass(r.verdict);
+    cardsHTML += `<div class="comparison-card-row">
+      <span class="row-label-mobile">Verdict</span>
+      <span class="comparison-verdict ${vCls}">${r.verdict ? escapeAttr(r.verdict) : '—'}</span>
+    </div>`;
+
+    // Sections
+    sectionRows.forEach(({ label, rowIdx, bestIdx }) => {
+      const sec = sectionsByCol[i][rowIdx];
+      const sCls = pctScoreClass(sec.pct);
+      const isBest = i === bestIdx;
+      cardsHTML += `<div class="comparison-card-row">
+        <span class="row-label-mobile">${escapeAttr(label)}</span>
+        <span>
+          ${sec.score != null
+            ? `<span class="comparison-score ${sCls}${isBest ? ' is-best' : ''}">${sec.score}<span class="denom">/${sec.max}</span></span>${isBest ? '<span class="winner-tag">Best</span>' : ''}`
+            : `<span class="comparison-score s-none">—</span>`}
+        </span>
+      </div>`;
+    });
+
+    if (r.verdict) {
+      cardsHTML += `<div class="comparison-card-quick-take">${escapeAttr(r.verdict)}.</div>`;
+    }
+    cardsHTML += `<button class="comparison-card-link" onclick="viewSavedReport('${escapeAttr(r.id)}')">View Full Report →</button>`;
+    cardsHTML += `</div></div>`;
+  });
+  cardsHTML += `</div>`;
+
+  return tableHTML + cardsHTML;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  ['company-input', 'role-input', 'industry-input'].forEach(id => {
+  renderRoleSelector();
+  renderFrameworkAndTagline();
+  refreshReportsBadge();
+
+  document.getElementById('role-category-select').addEventListener('change', renderFrameworkAndTagline);
+
+  ['company-input', 'job-title-input', 'industry-input'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => {
       if (e.key === 'Enter') runAnalysis();
     });
