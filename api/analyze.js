@@ -1,10 +1,11 @@
+import { buildPrompt, getTemplate } from './role-templates.js';
+
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { company, role, industry } = req.body;
+  const { company, roleCategory = 'general', jobTitle, industry } = req.body;
 
   if (!company) {
     return res.status(400).json({ error: 'Company name is required' });
@@ -15,65 +16,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured' });
   }
 
-  const roleStr = role || 'tech sales role';
-  const industryStr = industry ? ` in the ${industry} industry` : '';
-
-  const prompt = `Run a full Market Viability Report for ${company}${industryStr}. The candidate is evaluating this company for a ${roleStr} position.
-
-Search the web thoroughly and return the report in this exact structure:
-
-## ${company} — Market Viability Score
-
-### Overall Score: [XX] / 100 — [Strong Buy / Promising / Proceed with Caution / High Risk]
-
----
-
-### Gartner / Analyst Recognition — [XX]/25
-[Summary of Gartner MQ, EMQ, Cool Vendor, Forrester Wave, or IDC mentions. Include recency. Score conservatively if data is sparse.]
-
-### Financial Health & Growth — [XX]/30
-[Funding rounds, valuation, ARR/revenue, layoff history, investor quality, headcount trajectory. Flag any distress signals.]
-
-### Customer & Product Sentiment — [XX]/25
-[G2 rating and review themes, Gartner Peer Insights rating and review count. Common praise and criticism.]
-
-### Community & Employee Sentiment — [XX]/20
-[Glassdoor overall rating and % recommend, Blind discussions, RepVue score. Note sales org specific signals if available. Flag recurring concerns.]
-
----
-
-### Recent Press Tenor
-[🟢 Positive / 🟡 Mixed / 🔴 Negative] — [One sentence summary of last 90 days coverage]
-
----
-
-### Key Signals for a ${roleStr}
-[Table with Signal | Reading columns. Use ✅ ⚠️ 🔴. Include 5-6 rows most relevant to this specific role.]
-
----
-
-### Competitive Position
-[2-3 paragraph narrative on closest competitors and encroachment risk.]
-
----
-
-### Channel Presence Snapshot
-Search for ${company} channel partners, reseller program, and VAR partnerships. Check if major distributors (CDW, SHI, Insight, WWT, Optiv, GuidePoint) carry them.
-
-Present as a table: Reseller | Type | On Vendor Site | On Reseller Site
-Follow with one sentence on what the channel footprint signals.
-
----
-
-### Interview Questions
-
-**Questions to Ask Them:**
-[5-6 specific questions grounded in findings from THIS report — channel gaps, culture flags, competitive risks, financial signals. Each with a one-line note on what intel it's designed to surface. Format: Question text on one line, then (Note: ...) on the next.]
-
-**Questions to Prepare For:**
-[5-6 likely interview questions based on the JD responsibilities and company stage. Each with a one-line coaching note on what the interviewer is really assessing. Format: Question text on one line, then (Note: ...) on the next.]
-
-Keep responses grounded in what you actually found. If data was unavailable for a category, note it and score conservatively. Do not fabricate.`;
+  const template = getTemplate(roleCategory);
+  const prompt = buildPrompt(roleCategory, { company, industry, jobTitle });
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -87,7 +31,7 @@ Keep responses grounded in what you actually found. If data was unavailable for 
         model: 'claude-sonnet-4-20250514',
         max_tokens: 8192,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        system: `You are a market intelligence analyst helping tech sales professionals evaluate companies before applying. You produce structured, data-driven research reports. Always search the web thoroughly across all categories before writing the report. Be specific, cite actual numbers and ratings where found, and never fabricate scores or data. If data is unavailable for a category, say so explicitly and score conservatively.`,
+        system: template.systemPersona,
         messages: [{ role: 'user', content: prompt }]
       })
     });
@@ -103,7 +47,7 @@ Keep responses grounded in what you actually found. If data was unavailable for 
       .map(b => b.text)
       .join('\n');
 
-    return res.status(200).json({ result: textContent });
+    return res.status(200).json({ result: textContent, roleLabel: template.label });
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
