@@ -1847,6 +1847,7 @@ async function runAnalysis() {
 
   } catch (err) {
     clearInterval(stepInterval);
+    returnToAnalysisTab();
     document.getElementById('loading-state').classList.remove('active');
     document.getElementById('empty-state').style.display = 'flex';
     const errEl = document.getElementById('error-banner');
@@ -1857,8 +1858,27 @@ async function runAnalysis() {
   }
 }
 
+function returnToAnalysisTab() {
+  if (activeView === 'analysis') return;
+  activeView = 'analysis';
+  document.getElementById('tab-analysis').classList.add('active');
+  document.getElementById('tab-reports').classList.remove('active');
+  document.getElementById('reports-view').classList.remove('active');
+  document.getElementById('comparison-view').classList.remove('active');
+  document.getElementById('back-to-reports-btn').style.display = 'none';
+  document.getElementById('new-analysis-btn').style.display = 'none';
+  if (compareMode) {
+    compareMode = false;
+    selectedForCompare.clear();
+    document.getElementById('compare-banner').style.display = 'none';
+    document.getElementById('compare-toggle-btn').style.display = 'inline-flex';
+  }
+}
+
 function renderReport(r) {
   document.getElementById('loading-state').classList.remove('active');
+  returnToAnalysisTab();
+  document.getElementById('empty-state').style.display = 'none';
   document.getElementById('report-company-title').textContent = r.company;
   const subtitle = r.jobTitle ? `${r.roleLabel} · ${r.jobTitle}` : r.roleLabel;
   document.getElementById('report-role-title').textContent = `${subtitle} · Generated ${r.generatedAt}`;
