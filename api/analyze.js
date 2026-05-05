@@ -29,9 +29,9 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 4096,
-        tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 12 }],
-        system: template.systemPersona,
+        max_tokens: 8192,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        system: `${template.systemPersona} You have a strict budget of 10 web searches for this entire analysis. Use one focused search per major topic area — do not run multiple searches for the same section or source. Prioritize breadth over depth: one good search per category is better than three searches on one category and none on another.`,
         messages: [{ role: 'user', content: prompt }]
       })
     });
