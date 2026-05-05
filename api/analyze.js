@@ -29,8 +29,8 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 8192,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        max_tokens: 4096,
+        tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 12 }],
         system: template.systemPersona,
         messages: [{ role: 'user', content: prompt }]
       })
