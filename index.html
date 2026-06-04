@@ -1567,7 +1567,7 @@ function extractOverall(md) {
 
 function extractSectionScores(md) {
   const scores = {};
-  const re = /###\s+([^\n]+?)\s*—\s*(\d+)\s*\/\s*(\d+)/g;
+  const re = /###\s+([^\n]+?)\s*[—–-]\s*(\d+)\s*\/\s*(\d+)/g;
   let m;
   while ((m = re.exec(md)) !== null) {
     const title = m[1].replace(/\*+/g, '').trim();
@@ -1642,6 +1642,14 @@ function renderLoadingSteps() {
 }
 
 async function runAnalysis() {
+  // Role metadata loads asynchronously from /api/roles. The Run button is
+  // disabled until then, but the Enter-key handler can still reach here — bail
+  // out rather than dereference an empty ROLE_META.
+  if (!ROLE_ORDER.length) {
+    showToast('Still loading role options — one moment.');
+    return;
+  }
+
   const company = document.getElementById('company-input').value.trim();
   const roleCategory = getSelectedRoleId();
   const jobTitle = document.getElementById('job-title-input').value.trim();
@@ -1811,12 +1819,13 @@ function renderMarkdownToHTML(md) {
         <div class="score-label">Overall Score</div>
         <div class="score-number" style="color:${scoreColor}">${score}<span class="denom"> / 100</span></div>
       </div>
-      <div class="score-verdict ${verdictClass}">${getVerdictEmoji(verdict)} ${verdict}</div>
+      <div class="score-verdict ${verdictClass}">${getVerdictEmoji(verdict)} ${escapeHtml(verdict)}</div>
     </div>`;
   }
 
   // Process remaining content into sections
   const sections = md.split(/\n(?=###\s)/);
+  let renderedSections = 0;
   for (const section of sections) {
     const titleMatch = section.match(/^###\s+(.+)/);
     if (!titleMatch) continue;
@@ -1827,12 +1836,12 @@ function renderMarkdownToHTML(md) {
     if (title.toLowerCase().includes('overall score')) continue;
 
     // Score sections
-    const scored = title.match(/—\s*([\d]+)\/([\d]+)/);
-    const sectionTitle = title.replace(/—.*$/, '').trim();
+    const scored = title.match(/[—–-]\s*([\d]+)\/([\d]+)/);
+    const sectionTitle = title.replace(/[—–-]\s*[\d]+\/[\d]+.*$/, '').trim();
 
     let sectionHTML = `<div class="report-section">
       <div class="section-header">
-        <div class="section-title">${getSectionIcon(sectionTitle)} ${sectionTitle}</div>
+        <div class="section-title">${getSectionIcon(sectionTitle)} ${escapeHtml(sectionTitle)}</div>
         ${scored ? `<div class="section-score">${scored[1]} / ${scored[2]}</div>` : ''}
       </div>
       <div class="section-body">`;
@@ -1851,6 +1860,13 @@ function renderMarkdownToHTML(md) {
 
     sectionHTML += `</div></div>`;
     html += sectionHTML;
+    renderedSections++;
+  }
+
+  // Fallback: if the model didn't return the expected ###-section structure,
+  // show the escaped raw markdown so the user always sees the content.
+  if (renderedSections === 0) {
+    html += `<div class="report-section"><div class="section-body">${escapeAndFormat(md.trim())}</div></div>`;
   }
 
   return html;
@@ -1876,14 +1892,14 @@ function renderTable(content) {
   const dataRows = rows.slice(1);
 
   let table = `<table class="report-table"><thead><tr>`;
-  headers.forEach(h => { table += `<th>${h}</th>`; });
+  headers.forEach(h => { table += `<th>${escapeHtml(h)}</th>`; });
   table += `</tr></thead><tbody>`;
 
   dataRows.forEach(row => {
     const cells = row.split('|').map(c => c.trim()).filter(Boolean);
     if (cells.length === 0) return;
     table += `<tr>`;
-    cells.forEach(c => { table += `<td>${c}</td>`; });
+    cells.forEach(c => { table += `<td>${escapeHtml(c)}</td>`; });
     table += `</tr>`;
   });
 
@@ -1902,13 +1918,13 @@ function renderChannelPresence(content) {
     const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
     const dataRows = tableLines.slice(1);
     out += `<table class="report-table"><thead><tr>`;
-    headers.forEach(h => { out += `<th>${h}</th>`; });
+    headers.forEach(h => { out += `<th>${escapeHtml(h)}</th>`; });
     out += `</tr></thead><tbody>`;
     dataRows.forEach(row => {
       const cells = row.split('|').map(c => c.trim()).filter(Boolean);
       if (!cells.length) return;
       out += `<tr>`;
-      cells.forEach(c => { out += `<td>${c}</td>`; });
+      cells.forEach(c => { out += `<td>${escapeHtml(c)}</td>`; });
       out += `</tr>`;
     });
     out += `</tbody></table>`;
@@ -1950,8 +1966,8 @@ function renderInterviewQuestions(content) {
 
       if (!qText) return;
       out += `<div class="question-block">
-        <div class="question-text">${qText}</div>
-        ${note ? `<div class="question-note">→ ${note}</div>` : ''}
+        <div class="question-text">${escapeHtml(qText)}</div>
+        ${note ? `<div class="question-note">→ ${escapeHtml(note)}</div>` : ''}
       </div>`;
     });
 
@@ -2187,6 +2203,17 @@ function escapeAttr(s) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+// Escapes HTML-significant characters in model-derived text before it is
+// interpolated into innerHTML. Report markdown is influenced by user input
+// (company / job title / industry) and persisted, so every dynamic substring
+// in the renderer must pass through here or escapeAndFormat to avoid stored XSS.
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 function viewSavedReport(id) {
