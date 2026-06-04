@@ -40,7 +40,7 @@ Follow with one sentence on what the channel footprint signals for a sales / cha
   competitiveLens: '2-3 paragraph narrative on closest competitors and encroachment risk, with explicit emphasis on competitive win/loss patterns, displacement deals, and where reps are likely to lose head-to-head.',
   interviewAsk: 'channel gaps, sales-org culture flags, competitive risks, financial signals, quota attainment realism, ramp expectations, and sales leadership stability',
   interviewPrep: 'sales methodology fit (MEDDIC, Command of the Message, etc.), channel motion experience, deal-cycle storytelling, territory ownership, partner enablement, and revenue attainment narrative',
-  systemPersona: 'You are a market intelligence analyst helping tech sales and channel professionals evaluate companies before applying. You produce structured, data-driven research reports focused on go-to-market motion, channel ecosystem, sales-org health, and quota-attainment signals. Always search the web thoroughly across all categories before writing the report. Be specific, cite actual numbers and ratings where found, and never fabricate scores or data. If data is unavailable for a category, say so explicitly and score conservatively.',
+  systemPersona: 'You are a market intelligence analyst helping tech sales and channel professionals evaluate companies before applying. You produce structured, data-driven research reports focused on go-to-market motion, channel ecosystem, sales-org health, and quota-attainment signals. Be specific, cite actual numbers and ratings where found, and never fabricate scores or data. If data is unavailable for a category, say so explicitly and score conservatively.',
   loadingSteps: [
     'Searching Gartner, Forrester, and analyst sources',
     'Pulling funding, valuation, and headcount data',
@@ -76,7 +76,7 @@ Follow with one sentence on what the technical ecosystem signals for an engineer
   competitiveLens: '2-3 paragraph narrative on closest competitors with emphasis on technical differentiation, architectural choices, and where the engineering bet is being placed (e.g. ML infra, scale, latency, developer ergonomics). Note where competitors are out-shipping or out-hiring.',
   interviewAsk: 'engineering culture concerns from reviews, on-call expectations, tech debt vs. greenfield mix, deploy and code-review practices, build-vs-buy philosophy, eng leadership stability, and technical bets driving the roadmap',
   interviewPrep: 'system-design and coding rigor expected at this company tier, language / framework alignment to their stack, on-call comfort, ownership-model fit, past project deep-dives, and how to talk about tech debt and tradeoffs',
-  systemPersona: 'You are a market intelligence analyst helping software engineers evaluate companies before applying. You produce structured, data-driven research reports focused on technical reputation, engineering culture, code and infrastructure quality signals, and build-vs-buy posture. Always search the web thoroughly. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
+  systemPersona: 'You are a market intelligence analyst helping software engineers evaluate companies before applying. You produce structured, data-driven research reports focused on technical reputation, engineering culture, code and infrastructure quality signals, and build-vs-buy posture. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
   loadingSteps: [
     'Scanning eng blog, conference talks, and analyst coverage',
     'Pulling funding, layoffs, and R&D headcount trajectory',
@@ -112,7 +112,7 @@ Follow with one sentence on what the marketing ecosystem signals for a marketing
   competitiveLens: '2-3 paragraph narrative on competitive positioning — category narrative ownership, share-of-voice, and where the brand is winning or losing the messaging war. Note category creation attempts or repositioning moves.',
   interviewAsk: 'CMO tenure and recent leadership churn, content / campaign performance metrics, martech stack maturity, brand vs. demand-gen balance, agency relationships, marketing-budget posture, and how marketing is measured against revenue',
   interviewPrep: 'campaign storytelling with metrics, brand vs. demand experience, martech fluency, content / SEO / paid mix, sales-marketing alignment, ABM execution, and a POV on the company\'s current positioning',
-  systemPersona: 'You are a market intelligence analyst helping marketing professionals evaluate companies before applying. You produce structured, data-driven research reports focused on brand presence, category positioning, marketing-org maturity, and the sophistication of the company\'s demand-generation and content motion. Always search the web thoroughly. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
+  systemPersona: 'You are a market intelligence analyst helping marketing professionals evaluate companies before applying. You produce structured, data-driven research reports focused on brand presence, category positioning, marketing-org maturity, and the sophistication of the company\'s demand-generation and content motion. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
   loadingSteps: [
     'Reading analyst coverage and category-positioning signals',
     'Pulling funding, marketing spend, and headcount data',
@@ -148,7 +148,7 @@ Follow with one sentence on what the operational ecosystem signals for a finance
   competitiveLens: '2-3 paragraph narrative on competitive position with a finance lens — relative scale, capital efficiency vs. peers, valuation multiples in the category, and consolidation / M&A risk that could affect role longevity.',
   interviewAsk: 'audit history and restatements, runway and burn posture, finance-team scope and tooling, recent finance-leadership departures, regulatory exposure, board engagement on financials, and what the next-12-months financial plan looks like',
   interviewPrep: 'financial-modeling fluency, FP&A vs. accounting depth, systems experience (NetSuite, Workday, etc.), audit and SOX exposure if relevant, board-deck preparation, and a POV on the company\'s financial story',
-  systemPersona: 'You are a market intelligence analyst helping finance and operations professionals evaluate companies before applying. You produce structured, data-driven research reports focused on financial health depth, audit and controls maturity, regulatory posture, and leadership stability. Financial-health analysis should be the most thorough section. Always search the web thoroughly. Be specific, cite numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
+  systemPersona: 'You are a market intelligence analyst helping finance and operations professionals evaluate companies before applying. You produce structured, data-driven research reports focused on financial health depth, audit and controls maturity, regulatory posture, and leadership stability. Financial-health analysis should be the most thorough section. Be specific, cite numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
   loadingSteps: [
     'Scanning industry recognition and governance coverage',
     'Pulling funding, audit history, and regulatory filings',
@@ -184,7 +184,7 @@ Follow with one sentence on what the product distribution ecosystem signals for 
   competitiveLens: '2-3 paragraph narrative on closest competitors with a product lens — feature parity gaps, where this product wins or loses on UX, and where competitors are out-shipping. Note any disruptive entrants reshaping the category.',
   interviewAsk: 'roadmap transparency and how decisions get made, PM-vs-engineering dynamic, design and research investment, recent CPO or PM-leadership churn, customer-research practices, and how product success is measured',
   interviewPrep: 'product-sense storytelling, prioritization frameworks, metric / experimentation fluency, cross-functional collaboration with eng and design, recent product wins with measurable outcomes, and a POV on the company\'s product strategy',
-  systemPersona: 'You are a market intelligence analyst helping product managers evaluate companies before applying. You produce structured, data-driven research reports focused on product quality and user sentiment, product-led-growth signals, PM-org culture, and roadmap and community transparency. Product reviews and user sentiment should be the most thorough section. Always search the web thoroughly. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
+  systemPersona: 'You are a market intelligence analyst helping product managers evaluate companies before applying. You produce structured, data-driven research reports focused on product quality and user sentiment, product-led-growth signals, PM-org culture, and roadmap and community transparency. Product reviews and user sentiment should be the most thorough section. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
   loadingSteps: [
     'Scanning analyst coverage and product positioning',
     'Pulling funding, growth rate, and headcount trajectory',
@@ -220,7 +220,7 @@ Follow with one sentence on what the overall ecosystem signals about company mat
   competitiveLens: '2-3 paragraph narrative on closest competitors and overall competitive position. Cover differentiation, encroachment risk, and category trajectory.',
   interviewAsk: 'leadership stability, growth momentum vs. plan, recent organizational changes, culture flags surfaced in research, and how the company is investing across functions',
   interviewPrep: 'role-relevant fundamentals based on the specific job title provided, company-stage fit, why-this-company narrative, and a POV grounded in the public signals about the company',
-  systemPersona: 'You are a market intelligence analyst helping job seekers evaluate companies before applying. You produce structured, data-driven research reports with a balanced view across analyst recognition, financial health, customer / product sentiment, and culture. Always search the web thoroughly. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
+  systemPersona: 'You are a market intelligence analyst helping job seekers evaluate companies before applying. You produce structured, data-driven research reports with a balanced view across analyst recognition, financial health, customer / product sentiment, and culture. Be specific, cite ratings and numbers where found, and never fabricate. If data is unavailable, say so explicitly and score conservatively.',
   loadingSteps: [
     'Searching analyst, press, and industry recognition sources',
     'Pulling funding, valuation, and headcount data',
@@ -270,7 +270,7 @@ export function buildPrompt(roleId, { company, industry, jobTitle }) {
 
   return `Run a full Market Viability Report for ${company}${industryStr}. The candidate is evaluating this company for a ${t.label} position${titleStr}.
 
-Search the web thoroughly and return the report in this exact structure:
+Do up to 3 focused web searches, then return the report in this exact structure:
 
 ## ${company} — Market Viability Score
 
