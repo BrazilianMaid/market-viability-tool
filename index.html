@@ -1427,128 +1427,23 @@
 </div>
 
 <script>
-// Role metadata mirrors api/role-templates.js (UI-relevant subset only).
-// Source of truth for the prompt-shaping fields lives server-side; keep the
-// labels, weights, and loading-steps here in sync if the server template changes.
-const ROLE_META = {
-  sales: {
-    label: 'Sales / Channel',
-    tagline: 'Reseller ecosystem, channel motion, sales org reputation',
-    weights: { analyst: 25, financial: 30, product: 25, culture: 20 },
-    sectionLabels: {
-      analyst: 'Gartner / Analyst Recognition',
-      financial: 'Financial Health & Growth',
-      product: 'Customer & Product Sentiment',
-      culture: 'Sales Org & Employee Culture'
-    },
-    loadingSteps: [
-      'Searching Gartner, Forrester, and analyst sources',
-      'Pulling funding, valuation, and headcount data',
-      'Reading G2 and Gartner Peer Insights reviews',
-      'Scanning Glassdoor, Blind, and RepVue for sales-org signals',
-      'Mapping channel partners and reseller ecosystem',
-      'Compiling report and generating interview questions'
-    ]
-  },
-  engineering: {
-    label: 'Engineering',
-    tagline: 'Tech stack, dev reputation, engineering culture, build-vs-buy',
-    weights: { analyst: 20, financial: 25, product: 25, culture: 30 },
-    sectionLabels: {
-      analyst: 'Technical Analyst & Developer Reputation',
-      financial: 'Financial Health & Engineering Investment',
-      product: 'Product Quality & Developer Sentiment',
-      culture: 'Engineering Culture & Employee Reviews'
-    },
-    loadingSteps: [
-      'Scanning eng blog, conference talks, and analyst coverage',
-      'Pulling funding, layoffs, and R&D headcount trajectory',
-      'Reading developer reviews on G2, Stack Overflow, Hacker News',
-      'Filtering Glassdoor and Blind for engineering-specific signals',
-      'Mapping GitHub activity, integrations, and tech partnerships',
-      'Compiling report and generating interview questions'
-    ]
-  },
-  marketing: {
-    label: 'Marketing',
-    tagline: 'Brand presence, campaign sophistication, content quality, positioning',
-    weights: { analyst: 25, financial: 25, product: 25, culture: 25 },
-    sectionLabels: {
-      analyst: 'Brand Recognition & Analyst Coverage',
-      financial: 'Financial Health & Marketing Investment',
-      product: 'Brand Sentiment & Customer Perception',
-      culture: 'Marketing Org & Employee Culture'
-    },
-    loadingSteps: [
-      'Reading analyst coverage and category-positioning signals',
-      'Pulling funding, marketing spend, and headcount data',
-      'Assessing brand sentiment and customer story quality',
-      'Filtering Glassdoor and Blind for marketing-org signals',
-      'Mapping agency partnerships and martech stack',
-      'Compiling report and generating interview questions'
-    ]
-  },
-  finance: {
-    label: 'Finance / Operations',
-    tagline: 'Financial depth, operational maturity, audit history, leadership stability',
-    weights: { analyst: 15, financial: 40, product: 20, culture: 25 },
-    sectionLabels: {
-      analyst: 'Industry Recognition & Analyst Coverage',
-      financial: 'Financial Health, Audit & Operational Maturity',
-      product: 'Customer & Product Stability',
-      culture: 'Leadership Stability & Employee Culture'
-    },
-    loadingSteps: [
-      'Scanning industry recognition and governance coverage',
-      'Pulling funding, audit history, and regulatory filings',
-      'Assessing customer concentration and revenue stability',
-      'Filtering Glassdoor and Blind for G&A leadership signals',
-      'Mapping auditor, ERP, and compliance ecosystem',
-      'Compiling report and generating interview questions'
-    ]
-  },
-  product: {
-    label: 'Product',
-    tagline: 'Product reviews, PLG signals, PM culture, roadmap transparency',
-    weights: { analyst: 20, financial: 25, product: 35, culture: 20 },
-    sectionLabels: {
-      analyst: 'Industry & Analyst Recognition',
-      financial: 'Financial Health & Growth',
-      product: 'Product Reviews & User Sentiment',
-      culture: 'Product Org Culture & Employee Reviews'
-    },
-    loadingSteps: [
-      'Scanning analyst coverage and product positioning',
-      'Pulling funding, growth rate, and headcount trajectory',
-      'Reading G2, Product Hunt, and app-store reviews in depth',
-      'Filtering Glassdoor and Blind for PM-org signals',
-      'Mapping integrations, marketplace, and user community',
-      'Compiling report and generating interview questions'
-    ]
-  },
-  general: {
-    label: 'General',
-    tagline: 'Balanced view across all categories — good default for cross-functional roles',
-    weights: { analyst: 25, financial: 30, product: 25, culture: 20 },
-    sectionLabels: {
-      analyst: 'Industry Recognition & Analyst Coverage',
-      financial: 'Financial Health & Growth',
-      product: 'Customer & Product Sentiment',
-      culture: 'Community & Employee Sentiment'
-    },
-    loadingSteps: [
-      'Searching analyst, press, and industry recognition sources',
-      'Pulling funding, valuation, and headcount data',
-      'Reading G2, Gartner Peer Insights, and customer reviews',
-      'Scanning Glassdoor, Blind, and culture signals',
-      'Mapping partner and integration ecosystem',
-      'Compiling report and generating interview questions'
-    ]
-  }
-};
-
-const ROLE_ORDER = ['sales', 'engineering', 'marketing', 'finance', 'product', 'general'];
+// Role metadata is fetched from /api/roles at page load so that
+// api/role-templates.js is the single source of truth (labels, weights,
+// section labels, loading steps). Populated by loadRoles() before first render.
+let ROLE_META = {};
+let ROLE_ORDER = [];
 const DEFAULT_ROLE = 'sales';
+
+async function loadRoles() {
+  const res = await fetch('/api/roles');
+  if (!res.ok) throw new Error('roles endpoint ' + res.status);
+  const data = await res.json();
+  const list = Array.isArray(data) ? data : data.roles;
+  if (!Array.isArray(list) || list.length === 0) throw new Error('no roles returned');
+  ROLE_META = {};
+  ROLE_ORDER = [];
+  list.forEach(r => { ROLE_META[r.id] = r; ROLE_ORDER.push(r.id); });
+}
 
 let currentReport = { id: '', company: '', roleCategory: '', roleLabel: '', jobTitle: '', industry: '', markdown: '', generatedAt: '', overallScore: null, verdict: '', sectionScores: {} };
 let stepInterval = null;
@@ -1706,7 +1601,8 @@ function showToast(message) {
 
 function getSelectedRoleId() {
   const sel = document.getElementById('role-category-select');
-  return (sel && sel.value && ROLE_META[sel.value]) ? sel.value : DEFAULT_ROLE;
+  if (sel && sel.value && ROLE_META[sel.value]) return sel.value;
+  return ROLE_META[DEFAULT_ROLE] ? DEFAULT_ROLE : ROLE_ORDER[0];
 }
 
 function renderRoleSelector() {
@@ -2650,12 +2546,29 @@ function renderComparison(reports) {
   return tableHTML + cardsHTML;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderRoleSelector();
-  renderFrameworkAndTagline();
+document.addEventListener('DOMContentLoaded', async () => {
   refreshReportsBadge();
 
-  document.getElementById('role-category-select').addEventListener('change', renderFrameworkAndTagline);
+  const sel = document.getElementById('role-category-select');
+  const runBtn = document.getElementById('run-btn');
+  sel.disabled = true;
+  runBtn.disabled = true;
+  sel.innerHTML = '<option>Loading roles…</option>';
+
+  try {
+    await loadRoles();
+    renderRoleSelector();
+    renderFrameworkAndTagline();
+    sel.disabled = false;
+    runBtn.disabled = false;
+  } catch (err) {
+    sel.innerHTML = '<option>Unavailable</option>';
+    const errEl = document.getElementById('error-banner');
+    errEl.textContent = 'Could not load role options. Please refresh the page.';
+    errEl.classList.add('active');
+  }
+
+  sel.addEventListener('change', renderFrameworkAndTagline);
 
   ['company-input', 'job-title-input', 'industry-input'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => {
