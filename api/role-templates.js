@@ -33,10 +33,10 @@ const sales = {
     culture: 'Glassdoor overall rating and % recommend CEO, Blind discussions, RepVue score and quota attainment %, OTE realism, ramp time chatter, sales leadership tenure. Flag recurring concerns specific to the sales org.',
   },
   signalsGuidance: 'Surface signals most relevant to a quota-carrying or channel hire: channel program health, partner-led pipeline %, sales leadership tenure, OTE / quota realism, CRO or VP Sales departures, deal velocity chatter, ramp time. 5-6 rows.',
-  channelGuidance: `Run 2-3 broad searches to map the channel footprint — for example "{{COMPANY}} channel partners", "{{COMPANY}} reseller program", and "{{COMPANY}} partner ecosystem". Use the results to identify named VARs and resellers. As reference points for what to look for, common tech-sales resellers include CDW, SHI, Insight, Connection, Softchoice, WWT, Optiv, GuidePoint, Presidio, and Trace3 — but do not run individual site: searches against each one.
+  channelGuidance: `Discover {{COMPANY}}'s actual partner ecosystem — do NOT check a predefined list of resellers. Run 1-2 focused searches such as "{{COMPANY}} partners" and "{{COMPANY}} partnership announcement" to find: (a) partners the company itself lists on its own site (a "Partners" page, partner directory, or reseller/solution-partner listing), and (b) partnership news or press from roughly the last 12-18 months. Name the specific partners you actually find — never invent names to fill the table.
 
-Present as a table: Reseller | Type | On Vendor Site | On Reseller Site
-Follow with one sentence on what the channel footprint signals for a sales / channel hire (mature program vs. early-stage, direct-led vs. partner-led).`,
+Present as a table: Partner | Type (reseller / VAR / technology / SI / strategic) | Where Found (company site / press / both)
+Follow with one sentence on what the partner footprint signals for a sales / channel hire (mature program vs. early-stage, direct-led vs. partner-led). If you find no named partners, say so explicitly rather than guessing.`,
   competitiveLens: '2-3 paragraph narrative on closest competitors and encroachment risk, with explicit emphasis on competitive win/loss patterns, displacement deals, and where reps are likely to lose head-to-head.',
   interviewAsk: 'channel gaps, sales-org culture flags, competitive risks, financial signals, quota attainment realism, ramp expectations, and sales leadership stability',
   interviewPrep: 'sales methodology fit (MEDDIC, Command of the Message, etc.), channel motion experience, deal-cycle storytelling, territory ownership, partner enablement, and revenue attainment narrative',
